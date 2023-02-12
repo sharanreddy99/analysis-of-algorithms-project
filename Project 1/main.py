@@ -42,6 +42,7 @@ if __name__ == "__main__":
     n, m, days = readDummyInput()
     args = sys.argv
     if len(args) == 2:
+        # reads the first command line argument i.e. a number and calls the respective TASK method
         funcCall = "TASK{0}.main(n, m, days)".format(args[1])
         res = eval(funcCall)
         displayOutput(res)

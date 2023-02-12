@@ -77,31 +77,5 @@ The above solution is the optimal one as it paints all the houses available
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm doesn't yield an optimal answer?
-=> When the houses with higher startDays have a shorter duration than the houses with lower startDays
-=> n = 5; m = 4; days = [(1,2), (1,3), (1,4), (1,5)]
-
-Minheap sorted with shortest duration:
-    top -> (1,2) -> (1,3) -> (1,4), (1,5)
-
-
-According to current algorithm:
-1) House at index 3 is painted on day 1 => 1 lies between (1, 5)
-2) House at index 2 is painted on day 2 => 1 lies between (1, 4)
-3) House at index 1 is painted on day 3 => 1 lies between (1, 3)
-4) House at index 0 cannot be painted on day 4 or above
-Total number of houses painted = 3 (3, 2, 1)
-
-Optimal Solution:
-1) House at index 0 is painted on day 1 => 1 lies between (1, 2)
-2) House at index 1 is painted on day 2 => 2 lies between (1, 3)
-3) House at index 2 is painted on day 3 => 3 lies between (1, 4)
-4) House at index 3 is painted on day 4 => 4 lies between (1, 5)
-Total number of house painted = 4 (0, 1, 2, 3)
-
-"""
-
-
-"""
-Questions:
-    1) (1,3), (2,4), (2,5) => which one is latest (index2 or index3) for startDay = 2
+    This greedy approach always yields the optimal solution
 """
