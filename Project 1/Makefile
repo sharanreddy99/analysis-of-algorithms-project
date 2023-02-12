@@ -6,3 +6,5 @@ run3:
 	python3 main.py 3
 run4:
 	python3 main.py 4
+run5:
+	python3 main.py 5

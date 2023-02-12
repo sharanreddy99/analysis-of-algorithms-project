@@ -1,4 +1,4 @@
-# Algorithm that finds the max houses to be painted based on the earliest available house
+# Algorithm that finds the max houses to be painted based on the first available house
 from typing import List
 
 
@@ -23,6 +23,10 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
+TIME COMPLEXITY  : O(n)
+SPACE COMPLEXITY : O(n)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm yield an optimal answer?
 => When the start dates of each house are arranged in strictly increasing order
@@ -42,20 +46,19 @@ Optimal Solution:
 
 => Instance where this algorithm doesn't yield an optimal answer?
 => When the initial houses have a large deadline with them and the next houses have a short deadline
-=> n = 5; m = 4; days = [(1,3), (1,4), (1,5), (2,3)]
+=> n = 5; m = 4; days = [(1,2), (1,3), (1,4), (2,3)]
 
 => According to current algorithm:
-1) House at index 0 is painted on day 1 => 1 lies between (1, 3)
-2) House at index 1 is painted on day 2 => 2 lies between (1, 4)
-3) House at index 2 is painted on day 3 => 3 lies between (1, 5)
+1) House at index 0 is painted on day 1 => 1 lies between (1, 2)
+2) House at index 1 is painted on day 2 => 2 lies between (1, 3)
+3) House at index 2 is painted on day 3 => 3 lies between (1, 4)
 4) House at index 3 cannot be painted   => 4 doesn't lie between (2,3)
 => Total number of houses painted = 3 (0, 1, 2)
 
 Optimal Solution:
-1) No house is painted on day 1
-2) House at index 3 is painted on day 2 => 2 lies between (2, 3)
-3) House at index 0 is painted on day 3 => 3 lies between (1, 3)
-4) House at index 1 is painted on day 4 => 4 lies between (1, 4)
-5) House at index 2 is painted on day 5 => 5 lies between (1, 5)
-=> Total number of house painted = 4 (3, 0, 1, 2)
+1) House at index 0 is painted on day 1 => 1 lies between (1, 2)
+2) House at index 1 is painted on day 2 => 2 lies between (1, 3)
+3) House at index 3 is painted on day 3 => 3 lies between (2, 3)
+4) House at index 2 is painted on day 4 => 4 lies between (1, 4)
+=> Total number of house painted = 4 (0, 1, 3, 2)
 """
