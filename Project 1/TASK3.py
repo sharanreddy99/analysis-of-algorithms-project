@@ -23,12 +23,6 @@ class NodeObj:
             or (
                 (temp1 == temp2)
                 and (self.endDay == other.endDay)
-                and (self.startDay < other.startDay)
-            )
-            or (
-                (temp1 == temp2)
-                and (self.endDay == other.endDay)
-                and (self.startDay == other.startDay)
                 and (self.index < other.index)
             )
         )
