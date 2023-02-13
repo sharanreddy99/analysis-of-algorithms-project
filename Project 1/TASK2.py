@@ -26,8 +26,6 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     latestStartTimeHeap = []
     heapq.heapify(latestStartTimeHeap)
 
-    # startDay indicates the current day
-    startDay = 0
     daysIdx = 0
 
     # An array which stores the indices of houses painted.
