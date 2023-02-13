@@ -15,6 +15,7 @@ class NodeObj:
             self.startDay, self.endDay, self.index
         )
 
+    # We sort based on the earliest endDay for a given house and in case of a tie, we sort secondarily on startDay and index.
     def __lt__(self, other):
         return (
             (self.endDay < other.endDay)
@@ -38,6 +39,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     resultIndicesArr: List[int] = []
 
     for startDay in range(1, n + 1):
+        # We store all the houses that atmost begin at currentDay
         while daysIdx < m and days[daysIdx][0] <= startDay:
             if days[daysIdx][1] >= startDay:
                 heapq.heappush(
@@ -46,6 +48,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
                 )
             daysIdx += 1
 
+        # We then find the earliest endDay house which includes the current day and paint it.
         while len(earliestEndDayHeap) > 0:
             node: NodeObj = heapq.heappop(earliestEndDayHeap)
             if startDay >= node.startDay and startDay <= node.endDay:

@@ -15,6 +15,7 @@ class NodeObj:
             self.startDay, self.endDay, self.index
         )
 
+    # We sort the houses based on startDay <= currentDay and sort secondarily on largest index in case of a tie
     def __lt__(self, other):
         return (self.startDay < other.startDay) or (
             (self.startDay == other.startDay) and (self.index < other.index)
@@ -32,6 +33,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     resultIndicesArr: List[int] = []
 
     for startDay in range(1, n + 1):
+        # We store all the houses that atmost begin at currentDay
         while daysIdx < m and days[daysIdx][0] <= startDay:
             if days[daysIdx][1] >= startDay:
                 heapq.heappush(
@@ -40,6 +42,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
                 )
             daysIdx += 1
 
+        # We then find the latest available house which includes the current day and paint it.
         while len(latestStartTimeHeap) > 0:
             node: NodeObj = heapq.heappop(latestStartTimeHeap)
             node.startDay *= -1
