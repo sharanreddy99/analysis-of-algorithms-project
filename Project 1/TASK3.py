@@ -69,6 +69,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm yield an optimal answer?
+=> When the initial houses have larger duration than the subsequent houses
 => n = 4; m = 4; days = [(1,2), (1,4), (2,3), (3,4)]
 
 According to current algorithm:
@@ -76,7 +77,7 @@ According to current algorithm:
 2) House at index 2 is painted on day 2 => 2 lies between (2, 3)
 3) House at index 3 is painted on day 3 => 3 lies between (3, 4)
 3) House at index 1 is painted on day 4 => 4 lies between (1, 4)
-Total number of houses painted = 4 (0, 1, 2, 3)
+Total number of houses painted = 4 (0, 2, 3, 1)
 
 Optimal Solution:
 The above solution is the optimal one as it paints all the houses available
@@ -84,19 +85,19 @@ The above solution is the optimal one as it paints all the houses available
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm doesn't yield an optimal answer?
-=> When the initial houses have larger duration than the subsequent houses
-=> n = 5; m = 5; days = [(1,4), (1,3), (2,4), (3,5), (4,6)]
+=> When the initial houses have sort of larger duration than the subsequent houses but the later houses have sufficient duration to paint
+=> n = 5; m = 5; days = [(1,3), (1,4), (2,4), (3,5), (4,6)]
 
 According to current algorithm:
-1) House at index 1 is painted on day 1 => 1 lies between (1, 3)
+1) House at index 0 is painted on day 1 => 1 lies between (1, 3)
 2) House at index 2 is painted on day 2 => 2 lies between (2, 4)
 3) House at index 3 is painted on day 3 => 4 lies between (3, 5)
 4) House at index 4 is painted on day 4 => 5 lies between (4, 6)
-Total number of houses painted = 4 (1, 2, 3, 4)
+Total number of houses painted = 4 (0, 2, 3, 4)
 
 Optimal Solution:
-1) House at index 0 is painted on day 1 => 1 lies between (1, 4)
-2) House at index 1 is painted on day 2 => 2 lies between (1, 3)
+1) House at index 0 is painted on day 1 => 1 lies between (1, 3)
+2) House at index 1 is painted on day 2 => 2 lies between (1, 4)
 3) House at index 2 is painted on day 3 => 3 lies between (2, 4)
 4) House at index 3 is painted on day 4 => 4 lies between (3, 5)
 5) House at index 4 is painted on day 5 => 5 lies between (4, 6)
