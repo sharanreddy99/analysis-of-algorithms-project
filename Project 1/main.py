@@ -18,14 +18,25 @@ def readInput():
     n, m = map(
         int,
         input(
-            "Enter no of days (n) and number of houses (m) separated by spaces"
+            "Enter no of days (n) and number of houses (m) separated by spaces: "
         ).split(),
     )
     days = []
 
     # Read the start and end days of the m houses
     for i in range(m):
-        days.append(tuple(map(int, input().split())))
+        days.append(
+            tuple(
+                map(
+                    int,
+                    input(
+                        "Enter startDay, endDay for interval "
+                        + str(i + 1)
+                        + " sepeareted by a space: "
+                    ).split(),
+                )
+            )
+        )
 
     return n, m, days
 
@@ -40,7 +51,7 @@ def readDummyInput():
 
 
 if __name__ == "__main__":
-    n, m, days = readDummyInput()
+    n, m, days = readInput()
     args = sys.argv
     if len(args) == 2:
         # reads the first command line argument i.e. a number and calls the respective TASK method
