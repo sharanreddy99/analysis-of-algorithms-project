@@ -54,14 +54,14 @@ def generateDummyInput():
         int,
         input(
             "Enter number of days (n) and number of houses(m) separated by a space: "
-        ),
+        ).split(),
     )
 
     start, end = map(
         int,
-        input().split(
+        input(
             "Enter min start and max end range of the houses separated by space: "
-        ),
+        ).split(),
     )
 
     days = []
