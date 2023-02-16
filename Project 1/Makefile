@@ -9,6 +9,6 @@ run4:
 run5:
 	python3 main.py 5
 runmultiple:
-	python3 main.py multipleinput ${taska} ${taskb} ${minval} ${maxval}
+	python3 main.py multipleinput ${tasks} ${minval} ${maxval} ${testcases}
 runsingle:
 	python3 main.py singleinput ${taska} ${taskb}
