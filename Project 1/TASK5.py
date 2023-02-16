@@ -3,6 +3,8 @@
 from typing import List
 import heapq
 
+from helpers.AVLTree import AVLTree
+
 
 class NodeObj:
     def __init__(self, startDay: int, endDay: int, index: int):
@@ -37,7 +39,17 @@ def extractUniqueKeys(days, n):
             keysSet.add(end)
 
     keysSet = list(keysSet)
+    keysSet.sort()
     return keysSet
+
+
+def initializeAVLTree(keys):
+    avlTreeObj = AVLTree()
+    root = None
+    for val in keys:
+        root = avlTreeObj.insert(root, val)
+
+    return avlTreeObj, root
 
 
 def main(n: int, m: int, days: List[int]) -> List[int]:
@@ -52,12 +64,14 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
 
     # unique days of length m
     keysSet = extractUniqueKeys(days, n)
-    keysIdx = 0
+    avlTreeObj, root = initializeAVLTree(keysSet)
     startDay = keysSet[0]
+    keySetIdx = 0
 
-    while True:
-        while keysIdx < len(keysSet) and keysSet[keysIdx] <= startDay:
-            keysIdx += 1
+    while not (startDay > n or (daysIdx == m and len(earliestEndDayHeap) == 0)):
+        # update the latest keySet index to jump to the next available day when no value exists in the heap
+        while keySetIdx < len(keysSet) and keysSet[keySetIdx] <= startDay:
+            keySetIdx += 1
 
         # We store all the houses that atmost begin at currentDay
         while daysIdx < m and days[daysIdx][0] <= startDay:
@@ -70,19 +84,20 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
 
         # We then find the earliest endDay house which includes the current day and paint it.
         if len(earliestEndDayHeap) == 0:
-            if keysIdx == len(keysSet) or daysIdx == m:
-                break
+            if keySetIdx < len(keysSet):
+                startDay = keysSet[keySetIdx]
+                keySetIdx += 1
 
-            startDay = keysSet[keysIdx]
-            keysIdx += 1
         else:
             while len(earliestEndDayHeap) > 0:
                 node: NodeObj = heapq.heappop(earliestEndDayHeap)
-                if startDay >= node.startDay and startDay <= node.endDay:
+                avlTreeObj.setInterval(node.startDay, node.endDay)
+                closestStartDate = avlTreeObj.getClosestSmallestNode(root)
+                if closestStartDate != 10**9 + 7:
                     resultIndicesArr.append(node.index)
+                    root = avlTreeObj.removeAndInsertNext(root, closestStartDate)
+                    startDay += 1
                     break
-
-            startDay += 1
 
     return resultIndicesArr
 

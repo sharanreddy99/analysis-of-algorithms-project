@@ -8,3 +8,7 @@ run4:
 	python3 main.py 4
 run5:
 	python3 main.py 5
+runmultiple:
+	python3 main.py multipleinput ${taska} ${taskb} ${minval} ${maxval}
+runsingle:
+	python3 main.py singleinput ${taska} ${taskb}
