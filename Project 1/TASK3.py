@@ -63,6 +63,10 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
 """
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
+TIME COMPLEXITY  : O(n + m*logm)
+SPACE COMPLEXITY : O(n + m) 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm yield an optimal answer?
 => When the initial houses have larger duration than the subsequent houses
