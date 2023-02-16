@@ -24,10 +24,10 @@ class NodeObj:
 
 def main(n: int, m: int, days: List[int]) -> List[int]:
     # latestStartTimeHeap consists of intervals that end the earliest
-    latestStartTimeHeap = []
+    latestStartTimeHeap: List[NodeObj] = []
     heapq.heapify(latestStartTimeHeap)
 
-    daysIdx = 0
+    daysIdx: int = 0
 
     # An array which stores the indices of houses painted.
     resultIndicesArr: List[int] = []

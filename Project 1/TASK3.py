@@ -32,10 +32,10 @@ class NodeObj:
 
 def main(n: int, m: int, days: List[int]) -> List[int]:
     # shortestDurationHeap consists of intervals that have the smallest duration
-    shortestDurationHeap = []
+    shortestDurationHeap: List[NodeObj] = []
     heapq.heapify(shortestDurationHeap)
 
-    daysIdx = 0
+    daysIdx: int = 0
 
     # An array which stores the indices of houses painted.
     resultIndicesArr: List[int] = []

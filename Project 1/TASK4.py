@@ -30,10 +30,10 @@ class NodeObj:
 
 def main(n: int, m: int, days: List[int]) -> List[int]:
     # earliestEndDayHeap consists of intervals that end the earliest
-    earliestEndDayHeap = []
+    earliestEndDayHeap: List[NodeObj] = []
     heapq.heapify(earliestEndDayHeap)
 
-    daysIdx = 0
+    daysIdx: int = 0
 
     # An array which stores the indices of houses painted.
     resultIndicesArr: List[int] = []

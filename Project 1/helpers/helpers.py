@@ -2,6 +2,7 @@ import sys, json
 
 import TASK1, TASK2, TASK3, TASK4, TASK5
 from .iohelpers import generateDummyInput, readDummyInput
+from .timehelpers import startTimer, returnExecutionTime
 
 
 # prepareFunctionCall returns the function call string to be executed based on command line arguments
@@ -27,15 +28,20 @@ def compareOptimalTasksWithMultipleInput():
             tasks = list(map(int, args[2].split(",")))
             resArr = []
             for task in tasks:
+                startTimer()
                 res = eval("TASK{0}.main(n, m, days)".format(task))
                 resArr.append(res)
-                fp.write("Result of task{0}: {1}\n".format(task, json.dumps(res)))
+                fp.write(
+                    "Task - {0}, Length: {1}, Execution Time: {2}, Result: {3}\n".format(
+                        task, len(res), returnExecutionTime(), json.dumps(res)
+                    )
+                )
 
             for i in range(len(tasks)):
                 for j in range(i + 1, len(tasks)):
                     fp.write(
-                        "task{0} length: {1}, task{2} length: {3}\n".format(
-                            tasks[i], len(resArr[i]), tasks[j], len(resArr[j])
+                        "task{0} <= task{1} => {2}\n".format(
+                            tasks[i], tasks[j], areResultsEqual(resArr[i], resArr[j])
                         )
                     )
 
@@ -58,22 +64,19 @@ def compareOptimalTasksWithSingleInput():
         res2 = eval("TASK{0}.main(n, m, days)".format(int(args[3])))
         fp.write(json.dumps(res1) + "\n")
         fp.write(json.dumps(res2) + "\n")
-        writeIfEqual(fp, res1, res2)
+        fp.write(areResultsEqual(res1, res2))
         fp.write("\n\n")
 
 
-def writeIfEqual(fp, res1, res2):
+def areResultsEqual(res1, res2):
     res1.sort()
     res2.sort()
-    isEqual = False
-    if len(res1) == len(res2):
+    isEqual = len(res1) <= len(res2)
+    if not isEqual:
         for i in range(len(res1)):
             if res1[i] != res2[i]:
                 break
         else:
             isEqual = True
 
-    if isEqual:
-        fp.write("True")
-    else:
-        fp.write("False")
+    return "True" if isEqual else "False"
