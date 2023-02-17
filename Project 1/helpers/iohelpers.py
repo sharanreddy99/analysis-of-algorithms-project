@@ -39,9 +39,9 @@ def readInput():
 # readDummyInput returns a hardcoded input
 def readDummyInput():
     # Insert the commented data line from the program file
-    n = 83
-    m = 3
-    days = [[7, 80], [10, 63], [64, 70]]
+    n = 10000000
+    m = 4
+    days = [[1, 100], [54023, 56024], [75201, 82063], [99089, 99991]]
     days.sort()
 
     return n, m, days

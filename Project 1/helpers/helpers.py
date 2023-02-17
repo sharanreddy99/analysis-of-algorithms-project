@@ -60,10 +60,26 @@ def compareOptimalTasksWithSingleInput():
             )
         )
         fp.write(str(n) + " , " + str(m) + ", " + json.dumps(days) + "\n")
+        startTimer()
         res1 = eval("TASK{0}.main(n, m, days)".format(int(args[2])))
+        returnExecutionTime()
+        fp.write(
+            "Task - {0}, Length: {1}, Execution Time: {2}, Result: {3}\n".format(
+                int(args[2]), len(res1), returnExecutionTime(), json.dumps(res1)
+            )
+            + "\n"
+        )
+
+        startTimer()
         res2 = eval("TASK{0}.main(n, m, days)".format(int(args[3])))
-        fp.write(json.dumps(res1) + "\n")
-        fp.write(json.dumps(res2) + "\n")
+        returnExecutionTime()
+        fp.write(
+            "Task - {0}, Length: {1}, Execution Time: {2}, Result: {3}\n".format(
+                int(args[3]), len(res2), returnExecutionTime(), json.dumps(res2)
+            )
+            + "\n"
+        )
+
         fp.write(areResultsEqual(res1, res2))
         fp.write("\n\n")
 
