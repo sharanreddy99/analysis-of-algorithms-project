@@ -18,7 +18,7 @@ def prepareFunctionCall():
 
 
 def compareOptimalTasksWithMultipleInput():
-    with open("output.json", "w") as fp:
+    with open("./output/output.json", "w") as fp:
         args = sys.argv
         for i in range(int(args[5])):
             n, m, days = generateDummyInput(int(args[3]), int(args[4]))
@@ -51,7 +51,7 @@ def compareOptimalTasksWithMultipleInput():
 
 
 def compareOptimalTasksWithSingleInput():
-    with open("output_single.json", "w") as fp:
+    with open("./output/output_single.json", "w") as fp:
         args = sys.argv
         n, m, days = readDummyInput()
         if len(args) == 6:
@@ -108,7 +108,7 @@ def generateRandomInputFile():
         "testcases_" + "".join(random.choices(string.ascii_lowercase, k=8)) + ".txt"
     )
 
-    with open(writeFile, "w") as fp:
+    with open("./input/" + writeFile, "w") as fp:
         for i in range(testCases):
             n, m, days = generateDummyInput(minV, maxV)
             fp.write(json.dumps(n) + "\n")
@@ -120,8 +120,8 @@ def runFromTestFile():
     tasks = sys.argv[2].split(",")
     fileName = sys.argv[3]
     fileParts = fileName.split(".")
-    fp_opt = open(fileParts[0] + "_output." + fileParts[1], "w")
-    with open(fileName, "r") as fp:
+    fp_opt = open("./output/" + fileParts[0] + "_output." + fileParts[1], "w")
+    with open("./input/" + fileName, "r") as fp:
         n = 0
         m = 0
         days = []
