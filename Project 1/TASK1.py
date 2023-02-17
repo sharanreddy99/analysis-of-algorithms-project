@@ -5,28 +5,23 @@ from typing import List
 def main(n: int, m: int, days: List[int]) -> List[int]:
     # A pointer to the current house to be painted.
     daysIdx: int = 0
-    startDay: int = 1
 
     # An array which stores the indices of houses painted.
     resultIndicesArr: List[int] = []
 
-    while startDay <= n and daysIdx < m:
+    for startDay in range(1, n + 1):
         # If the current days lies between the start and end days of the house, we paint it.
         if startDay >= days[daysIdx][0] and startDay <= days[daysIdx][1]:
             resultIndicesArr.append(daysIdx)
             daysIdx += 1
             startDay += 1
-        elif days[daysIdx][0] > startDay:
-            startDay = days[daysIdx][0]
-        elif days[daysIdx][1] < startDay:
-            daysIdx += 1
 
     return resultIndicesArr
 
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-TIME COMPLEXITY  : O(n + m)
+TIME COMPLEXITY  : O(n)
 SPACE COMPLEXITY : O(n)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
