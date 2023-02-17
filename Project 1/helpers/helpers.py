@@ -1,3 +1,5 @@
+import random
+import string
 import sys, json
 
 import TASK1, TASK2, TASK3, TASK4, TASK5
@@ -102,8 +104,56 @@ def generateRandomInputFile():
     minV = int(sys.argv[2])
     maxV = int(sys.argv[3])
     testCases = int(sys.argv[4])
+    writeFile = (
+        "testcases_" + "".join(random.choices(string.ascii_lowercase, k=8)) + ".txt"
+    )
 
-    with open("testcases.txt", "w") as fp:
+    with open(writeFile, "w") as fp:
         for i in range(testCases):
             n, m, days = generateDummyInput(minV, maxV)
-            fp.write("{0}\n{1}\n{2}\n".format(n, m, days))
+            fp.write(json.dumps(n) + "\n")
+            fp.write(json.dumps(m) + "\n")
+            fp.write(json.dumps(days) + "\n")
+
+
+def runFromTestFile():
+    tasks = sys.argv[2].split(",")
+    fileName = sys.argv[3]
+    fileParts = fileName.split(".")
+    fp_opt = open(fileParts[0] + "_output." + fileParts[1], "w")
+    with open(fileName, "r") as fp:
+        n = 0
+        m = 0
+        days = []
+        idx = 0
+        while True:
+            chunk = fp.readline().rstrip("\n ")
+            if chunk == "":
+                break
+            n = int(chunk)
+
+            chunk = fp.readline().rstrip("\n ")
+            if chunk == "":
+                break
+            m = int(chunk)
+
+            chunk = fp.readline().rstrip("\n ")
+            if chunk == "":
+                break
+
+            days = json.loads(chunk)
+            days.sort()
+            for task in tasks:
+                startTimer()
+                res = eval("TASK{0}.main(n, m, days)".format(task))
+                respData = {
+                    "task": task,
+                    "n": n,
+                    "m": m,
+                    "respLength": len(res),
+                    "executionTime": returnExecutionTime(),
+                }
+                fp_opt.write(json.dumps(respData))
+                fp_opt.write("\n")
+            fp_opt.write("\n")
+    fp_opt.close()

@@ -6,6 +6,7 @@ from .helpers import (
     compareOptimalTasksWithMultipleInput,
     compareOptimalTasksWithSingleInput,
     generateRandomInputFile,
+    runFromTestFile,
 )
 
 from .iohelpers import displayOutput, readInput

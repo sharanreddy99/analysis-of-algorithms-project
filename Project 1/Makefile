@@ -14,3 +14,5 @@ runsingle:
 	python3 main.py singleinput ${taska} ${taskb}
 rungentest:
 	python3 main.py generatetestcases ${minval} ${maxval} ${testcases}
+runfromtestfile:
+	python3 main.py runfromtestfile ${tasks} ${filename}

@@ -10,6 +10,9 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     resultIndicesArr: List[int] = []
 
     for startDay in range(1, n + 1):
+        if daysIdx == m:
+            break
+
         # If the current days lies between the start and end days of the house, we paint it.
         if startDay >= days[daysIdx][0] and startDay <= days[daysIdx][1]:
             resultIndicesArr.append(daysIdx)
