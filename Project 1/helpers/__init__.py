@@ -5,6 +5,7 @@ from .helpers import (
     prepareFunctionCall,
     compareOptimalTasksWithMultipleInput,
     compareOptimalTasksWithSingleInput,
+    generateRandomInputFile,
 )
 
 from .iohelpers import displayOutput, readInput

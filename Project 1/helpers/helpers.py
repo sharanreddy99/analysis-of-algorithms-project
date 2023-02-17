@@ -96,3 +96,14 @@ def areResultsEqual(res1, res2):
             isEqual = True
 
     return "True" if isEqual else "False"
+
+
+def generateRandomInputFile():
+    minV = int(sys.argv[2])
+    maxV = int(sys.argv[3])
+    testCases = int(sys.argv[4])
+
+    with open("testcases.txt", "w") as fp:
+        for i in range(testCases):
+            n, m, days = generateDummyInput(minV, maxV)
+            fp.write("{0}\n{1}\n{2}\n".format(n, m, days))

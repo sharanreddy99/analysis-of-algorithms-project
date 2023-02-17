@@ -50,17 +50,13 @@ def readDummyInput():
 # generateDummyInput generates the dummy data based on user's input requirements
 def generateDummyInput(minV, maxV):
     n = randint(minV, maxV)
-    m = randint(minV, maxV)
+    m = randint(minV, n + 1)
     start = -1
     end = -2
-    while start >= end:
-        start = randint(minV, maxV)
-        end = randint(minV, maxV)
-
     days = []
     while len(days) < m:
-        start = randint(minV, n)
-        end = randint(minV, n)
+        start = randint(minV, maxV)
+        end = randint(minV, maxV)
         if start < end:
             days.append((start, end))
 

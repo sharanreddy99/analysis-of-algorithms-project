@@ -6,6 +6,7 @@ from helpers import (
     readInput,
     compareOptimalTasksWithMultipleInput,
     compareOptimalTasksWithSingleInput,
+    generateRandomInputFile,
 )
 
 import TASK1
@@ -20,6 +21,8 @@ if __name__ == "__main__":
         compareOptimalTasksWithMultipleInput()
     elif sys.argv[1] == "singleinput":
         compareOptimalTasksWithSingleInput()
+    elif sys.argv[1] == "generatetestcases":
+        generateRandomInputFile()
     else:
         n, m, days = readInput()
         funcCall = prepareFunctionCall()

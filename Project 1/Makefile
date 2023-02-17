@@ -12,3 +12,5 @@ runmultiple:
 	python3 main.py multipleinput ${tasks} ${minval} ${maxval} ${testcases}
 runsingle:
 	python3 main.py singleinput ${taska} ${taskb}
+rungentest:
+	python3 main.py generatetestcases ${minval} ${maxval} ${testcases}
