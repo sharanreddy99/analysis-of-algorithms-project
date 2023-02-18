@@ -1,6 +1,7 @@
 import json
 import os
 from random import choice, randint
+import sys
 from IPython.display import display
 import pandas as pd
 
@@ -68,6 +69,11 @@ def generateDummyInput(minV, maxV):
 
 
 def plotPandasTable():
+    filename = sys.argv[2]
+    foldername = sys.argv[3]
+    createFolderIfDoesntExist(foldername)
+    filename = foldername + filename
+
     dataArr = {
         i: {
             "combinedData": [],
@@ -111,8 +117,11 @@ def plotPandasTable():
     rowIdx = pd.MultiIndex.from_tuples(list(dataMap.keys()), names=["n", "m"])
     colIdx = pd.MultiIndex.from_tuples(colIndices)
     df = pd.DataFrame(list(dataMap.values()), index=rowIdx, columns=colIdx)
-    print(
-        df.style.applymap(lambda x: "color:green;")
-        .applymap(lambda x: "color:red;")
-        .to_html()
-    )
+
+    with open(filename, "w") as fp:
+        fp.write(df.style.applymap(lambda x: "color:green;").to_html())
+
+
+def createFolderIfDoesntExist(path):
+    if not os.path.exists(path):
+        os.makedirs(path)

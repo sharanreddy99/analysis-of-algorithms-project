@@ -17,6 +17,6 @@ rungentest:
 runfromtestfile:
 	python3 main.py runfromtestfile ${tasks} ${filename}
 runplotoutput:
-	python3 main.py plotoutput ${xaxis} ${yaxis} ${xlabel} ${ylabel} ${filename}
+	python3 main.py plotoutput ${xaxis} ${yaxis} ${xlabel} ${ylabel} ${filename} ${foldername}
 rungentable:
-	python3 main.py rungentable
+	python3 main.py rungentable ${filename} ${foldername}

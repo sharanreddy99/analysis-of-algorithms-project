@@ -3,6 +3,8 @@ import os
 import sys
 from matplotlib import pyplot as plt
 
+from helpers.iohelpers import createFolderIfDoesntExist
+
 
 def plotDataFromOutputFile():
     xaxisAttributeName = sys.argv[2]
@@ -10,6 +12,10 @@ def plotDataFromOutputFile():
     xLabel = sys.argv[4]
     yLabel = sys.argv[5]
     filename = sys.argv[6]
+    foldername = sys.argv[7]
+    createFolderIfDoesntExist(foldername)
+    filename = foldername + filename
+
     combinedDataKey = "combinedData"
     dataArr = {
         i: {
@@ -74,5 +80,5 @@ def plotLineGraph(dataArr, xLabel, yLabel, filename):
 
     plt.xlabel(xLabel, labelpad=5)
     plt.ylabel(yLabel, labelpad=5)
-    plt.legend(loc="upper right")
+    plt.legend(loc="upper left")
     plt.savefig(filename)
