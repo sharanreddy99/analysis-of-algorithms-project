@@ -60,7 +60,7 @@ def generateDummyInput(minV, maxV):
     end = -2
     days = []
     while len(days) < m:
-        start = randint(minV, maxV)
+        start = randint(minV, n + 1)
         end = randint(minV, maxV)
         if start < end:
             days.append((start, end))
