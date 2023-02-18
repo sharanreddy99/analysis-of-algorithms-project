@@ -1,6 +1,7 @@
 #!/bin/bash
 
 noOfPlots=30
+rm -rf plots/*
 
 for ((x = 1; x <= $noOfPlots; x++)); do
     minVal=1
@@ -12,7 +13,7 @@ for ((x = 1; x <= $noOfPlots; x++)); do
     outputRespFolder="./plots/Plot$x/"
     n=$((highest / step))
 
-    rm input/* output/*
+    rm -rf input/* output/*
     for ((i = 1; i <= n; i++)); do
         make rungentest minval=$minVal maxval=$maxVal testcases=$testCases
         inpFileName=$(find ./input -printf '%T+ %p\n' | sort -r | head -n1 | awk '{print $2}' | awk -F '/' '{print $3}')
