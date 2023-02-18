@@ -8,6 +8,7 @@ from helpers import (
     compareOptimalTasksWithSingleInput,
     generateRandomInputFile,
     runFromTestFile,
+    plotDataFromOutputFile,
 )
 
 import TASK1
@@ -26,6 +27,8 @@ if __name__ == "__main__":
         generateRandomInputFile()
     elif sys.argv[1] == "runfromtestfile":
         runFromTestFile()
+    elif sys.argv[1] == "plotoutput":
+        plotDataFromOutputFile()
     else:
         n, m, days = readInput()
         funcCall = prepareFunctionCall()

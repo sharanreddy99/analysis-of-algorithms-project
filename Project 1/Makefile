@@ -16,3 +16,5 @@ rungentest:
 	python3 main.py generatetestcases ${minval} ${maxval} ${testcases}
 runfromtestfile:
 	python3 main.py runfromtestfile ${tasks} ${filename}
+runplotoutput:
+	python3 main.py plotoutput ${yaxis}

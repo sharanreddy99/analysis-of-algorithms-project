@@ -147,7 +147,7 @@ def runFromTestFile():
                 startTimer()
                 res = eval("TASK{0}.main(n, m, days)".format(task))
                 respData = {
-                    "task": task,
+                    "task": int(task),
                     "n": n,
                     "m": m,
                     "respLength": len(res),
@@ -155,5 +155,4 @@ def runFromTestFile():
                 }
                 fp_opt.write(json.dumps(respData))
                 fp_opt.write("\n")
-            fp_opt.write("\n")
     fp_opt.close()

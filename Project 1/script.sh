@@ -14,7 +14,7 @@ rm input/* output/*
 for ((i = 1; i <= n; i++)); do
     make rungentest minval=$minVal maxval=$maxVal testcases=$testCases
     inpFileName=$(find ./input -printf '%T+ %p\n' | sort -r | head -n1 | awk '{print $2}' | awk -F '/' '{print $3}')
-    echo $inpFileName
     make runfromtestfile tasks=$tasks filename=$inpFileName
     ((maxVal += step))
 done
+make runplotoutput yaxis=respLength
