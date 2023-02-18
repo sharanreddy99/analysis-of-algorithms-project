@@ -64,6 +64,11 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
 
     # unique days of length m
     keysSet = extractUniqueKeys(days, n)
+
+    # no interval has a startDay <= n
+    if (len(keysSet)) == 0:
+        return []
+
     avlTreeObj, root = initializeAVLTree(keysSet)
     startDay = keysSet[0]
     keySetIdx = 0
