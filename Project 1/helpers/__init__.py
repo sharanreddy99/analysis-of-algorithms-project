@@ -9,7 +9,7 @@ from .helpers import (
     runFromTestFile,
 )
 
-from .iohelpers import displayOutput, readInput
+from .iohelpers import displayOutput, readInput, plotPandasTable
 
 from .timehelpers import startTimer, returnExecutionTime
 

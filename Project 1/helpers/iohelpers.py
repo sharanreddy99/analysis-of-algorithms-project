@@ -1,4 +1,8 @@
+import json
+import os
 from random import choice, randint
+from IPython.display import display
+import pandas as pd
 
 
 # DisplayOutput displays the output
@@ -61,3 +65,54 @@ def generateDummyInput(minV, maxV):
             days.append((start, end))
 
     return n, m, days
+
+
+def plotPandasTable():
+    dataArr = {
+        i: {
+            "combinedData": [],
+        }
+        for i in range(1, 5)
+    }
+
+    dirList = os.listdir("./output")
+    for fileName in dirList:
+        with open("./output/" + fileName, "r") as fp:
+            while True:
+                chunk = fp.readline().rstrip("\n ")
+                if chunk == "":
+                    break
+                data = json.loads(chunk)
+                dataArr[data["task"]]["combinedData"].append(
+                    (
+                        data["n"],
+                        data["m"],
+                        data["respLength"],
+                        data["executionTime"],
+                    )
+                )
+
+    for i in range(1, 5):
+        dataArr[i]["combinedData"].sort(key=lambda x: x[0])
+
+    dataMap = {}
+    colIndices = []
+    for i in range(1, 5):
+        colIndices.append(("TASK - " + str(i), "Painted Houses"))
+        colIndices.append(("TASK - " + str(i), "Execution Time"))
+
+    for idx in range(1, 5):
+        for row in dataArr[idx]["combinedData"]:
+            key = (row[0], row[1])
+            dataMap[key] = dataMap.get(key, [])
+            dataMap[key].append(row[2])
+            dataMap[key].append(row[3])
+
+    rowIdx = pd.MultiIndex.from_tuples(list(dataMap.keys()), names=["n", "m"])
+    colIdx = pd.MultiIndex.from_tuples(colIndices)
+    df = pd.DataFrame(list(dataMap.values()), index=rowIdx, columns=colIdx)
+    print(
+        df.style.applymap(lambda x: "color:green;")
+        .applymap(lambda x: "color:red;")
+        .to_html()
+    )

@@ -18,6 +18,9 @@
 #     ((minVal += step))
 #     ((maxVal += step))
 # done
-make runplotoutput xaxis=n yaxis=m xlabel="AVAILABILITY_OF_PAINTER" ylabel="NO_OF_HOUSES" filename="./plots/Plot2/n_and_m.png"
-make runplotoutput xaxis=n yaxis=respLength xlabel="AVAILABILITY_OF_PAINTER" ylabel="NO_OF_HOUSES_PAINTED" filename="./plots/Plot2/n_and_respLength.png"
-make runplotoutput xaxis=n yaxis=executionTime xlabel="AVAILABILITY_OF_PAINTER" ylabel="EXECUTION_TIME" filename="./plots/Plot2/n_and_executionTime.png"
+
+# make runplotoutput xaxis=n yaxis=m xlabel="AVAILABILITY_OF_PAINTER" ylabel="NO_OF_HOUSES" filename="./plots/Plot5/n_and_m.png"
+# make runplotoutput xaxis=n yaxis=respLength xlabel="AVAILABILITY_OF_PAINTER" ylabel="NO_OF_HOUSES_PAINTED" filename="./plots/Plot5/n_and_respLength.png"
+# make runplotoutput xaxis=n yaxis=executionTime xlabel="AVAILABILITY_OF_PAINTER" ylabel="EXECUTION_TIME" filename="./plots/Plot5/n_and_executionTime.png"
+
+make rungentable

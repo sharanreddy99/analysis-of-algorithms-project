@@ -9,6 +9,7 @@ from helpers import (
     generateRandomInputFile,
     runFromTestFile,
     plotDataFromOutputFile,
+    plotPandasTable,
 )
 
 import TASK1
@@ -29,6 +30,8 @@ if __name__ == "__main__":
         runFromTestFile()
     elif sys.argv[1] == "plotoutput":
         plotDataFromOutputFile()
+    elif sys.argv[1] == "rungentable":
+        plotPandasTable()
     else:
         n, m, days = readInput()
         funcCall = prepareFunctionCall()
