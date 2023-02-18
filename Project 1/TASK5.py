@@ -87,6 +87,8 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
             if keySetIdx < len(keysSet):
                 startDay = keysSet[keySetIdx]
                 keySetIdx += 1
+            else:
+                break
 
         else:
             while len(earliestEndDayHeap) > 0:
