@@ -143,6 +143,8 @@ def runFromTestFile():
 
             days = json.loads(chunk)
             days.sort()
+            # task4ResLen = 0
+            # task5ResLen = 0
             for task in tasks:
                 startTimer()
                 res = eval("TASK{0}.main(n, m, days)".format(task))
@@ -153,6 +155,14 @@ def runFromTestFile():
                     "respLength": len(res),
                     "executionTime": returnExecutionTime(),
                 }
+
+                # if task == "4":
+                #     task4ResLen = len(res)
+                # elif task == "5":
+                #     task5ResLen = len(res)
+
                 fp_opt.write(json.dumps(respData))
                 fp_opt.write("\n")
+            # if not (task4ResLen > 0 and task4ResLen == task5ResLen):
+            #     print("Found a case")
     fp_opt.close()

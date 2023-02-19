@@ -1,4 +1,3 @@
-from .AVLTree import AVLTree
 from .helpers import (
     readDummyInput,
     generateDummyInput,

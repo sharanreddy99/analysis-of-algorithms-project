@@ -3,8 +3,6 @@
 from typing import List
 import heapq
 
-from helpers.AVLTree import AVLTree
-
 
 class NodeObj:
     def __init__(self, startDay: int, endDay: int, index: int):
@@ -31,25 +29,14 @@ class NodeObj:
 
 
 def extractUniqueKeys(days, n):
-    keysSet = set()
-    for start, end in days:
-        if start <= n:
-            keysSet.add(start)
-        if end <= n:
-            keysSet.add(end)
+    keysSet = []
+    prev = -1
+    for start, _ in days:
+        if start != prev:
+            prev = start
+            keysSet.append(start)
 
-    keysSet = list(keysSet)
-    keysSet.sort()
     return keysSet
-
-
-def initializeAVLTree(keys):
-    avlTreeObj = AVLTree()
-    root = None
-    for val in keys:
-        root = avlTreeObj.insert(root, val)
-
-    return avlTreeObj, root
 
 
 def main(n: int, m: int, days: List[int]) -> List[int]:
@@ -69,13 +56,12 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     if (len(keysSet)) == 0:
         return []
 
-    avlTreeObj, root = initializeAVLTree(keysSet)
     startDay = keysSet[0]
     keySetIdx = 0
 
-    while not (startDay > n or (daysIdx == m and len(earliestEndDayHeap) == 0)):
+    while startDay <= n:
         # update the latest keySet index to jump to the next available day when no value exists in the heap
-        while keySetIdx < len(keysSet) and keysSet[keySetIdx] <= startDay:
+        if keySetIdx < len(keysSet) and keysSet[keySetIdx] <= startDay:
             keySetIdx += 1
 
         # We store all the houses that atmost begin at currentDay
@@ -87,24 +73,21 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
                 )
             daysIdx += 1
 
-        # We then find the earliest endDay house which includes the current day and paint it.
+        # If there exists more houses to paint but we have none in our priority queue, then we just to the next possible startDay
         if len(earliestEndDayHeap) == 0:
-            if keySetIdx < len(keysSet):
-                startDay = keysSet[keySetIdx]
-                keySetIdx += 1
-            else:
+            if keySetIdx == len(keysSet):
                 break
 
-        else:
-            while len(earliestEndDayHeap) > 0:
-                node: NodeObj = heapq.heappop(earliestEndDayHeap)
-                avlTreeObj.setInterval(node.startDay, node.endDay)
-                closestStartDate = avlTreeObj.getClosestSmallestNode(root)
-                if closestStartDate != 10**9 + 7:
-                    resultIndicesArr.append(node.index)
-                    root = avlTreeObj.removeAndInsertNext(root, closestStartDate)
-                    startDay += 1
-                    break
+            startDay = keysSet[keySetIdx]
+            keySetIdx += 1
+
+        # We then find the house with the earliest endDay that has the current day and paint it.
+        while len(earliestEndDayHeap) > 0:
+            node: NodeObj = heapq.heappop(earliestEndDayHeap)
+            if startDay >= node.startDay and startDay <= node.endDay:
+                resultIndicesArr.append(node.index)
+                startDay += 1
+                break
 
     return resultIndicesArr
 
