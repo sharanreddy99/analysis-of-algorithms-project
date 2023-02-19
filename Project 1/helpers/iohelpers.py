@@ -1,7 +1,6 @@
 import json
-import math
 import os
-from random import choice, randint, random
+from random import choice, randint
 import sys
 from IPython.display import display
 import pandas as pd
@@ -55,14 +54,14 @@ def readDummyInput():
 
 # generateDummyInput generates the dummy data based on user's input requirements
 def generateDummyInput(minV, maxV):
-    n = randint(maxV, 100000)
-    m = randint(1, 100)
+    n = randint(minV, maxV)
+    m = randint(minV, n + 1)
     start = -1
     end = -2
     days = []
     while len(days) < m:
         start = randint(minV, n + 1)
-        end = randint(minV, n + 1)
+        end = randint(minV, maxV)
         if start < end:
             days.append((start, end))
 
