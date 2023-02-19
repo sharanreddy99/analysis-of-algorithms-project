@@ -15,7 +15,9 @@ class NodeObj:
             self.startDay, self.endDay, self.index
         )
 
-    # We sort the houses based on startDay <= currentDay and sort secondarily on largest index in case of a tie
+    # Although we are sorting for the smallest startDay and secondarily on the smallest endDay,
+    # we will be passing negative startDay and indices so that the values are sorted in descending order.
+    # We will be converting them to positives again once we pop them
     def __lt__(self, other):
         return (self.startDay < other.startDay) or (
             (self.startDay == other.startDay) and (self.index < other.index)
@@ -23,7 +25,7 @@ class NodeObj:
 
 
 def main(n: int, m: int, days: List[int]) -> List[int]:
-    # latestStartTimeHeap consists of intervals that end the earliest
+    # latestStartTimeHeap consists of intervals that begin the latest until currentDay
     latestStartTimeHeap: List[NodeObj] = []
     heapq.heapify(latestStartTimeHeap)
 
@@ -63,7 +65,7 @@ SPACE COMPLEXITY : O(n + m)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm yield an optimal answer?
-=> When the starting houses have larger duration than the subsequent houses.
+=> When the initial houses have longer intervals compared to the subsequent intervals
 => n = 4; m = 4; days = [(1,5), (1,5), (1,5), (2,3)]
 
 According to current algorithm:
@@ -79,7 +81,7 @@ The above solution is the optimal one as it paints all the houses available
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm doesn't yield an optimal answer?
-=> When the initial houses have lower endDays than the subsequent houses
+=> When the initial houses have shorter intervals compared to the subsequent intervals.
 => n = 5; m = 5; days = [(1,2), (1,3), (1,4), (2, 5), (3, 5)]
 
 According to current algorithm:

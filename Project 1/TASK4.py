@@ -16,6 +16,8 @@ class NodeObj:
         )
 
     # We sort based on the earliest endDay for a given house and in case of a tie, we sort secondarily on startDay and index.
+    # Incase of a tie, it doesn't matter if we pick one with shorter startDay over the other and vice versa as one of them
+    # will be left if they fall behind or will be picked if they have sufficiently larger endDay in the future.
     def __lt__(self, other):
         return (
             (self.endDay < other.endDay)
@@ -66,7 +68,7 @@ SPACE COMPLEXITY : O(n + m)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm yield an optimal answer?
-=> When the starting houses have larger duration than the subsequent houses.
+=> This algorithm will yield an optimal solution for any combination of test cases.
 => n = 5; m = 4; days = [(1,2), (1,3), (1,4), (2, 3)]
 
 According to current algorithm:
@@ -75,13 +77,4 @@ According to current algorithm:
 3) House at index 3 is painted on day 3 => 3 lies between (2, 3)
 3) House at index 2 is painted on day 4 => 4 lies between (1, 4)
 Total number of houses painted = 4 (0, 1, 3, 2)
-
-Optimal Solution:
-The above solution is the optimal one as it paints all the houses available
-
------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-=> Instance where this algorithm doesn't yield an optimal answer?
-    This greedy approach always yields the optimal solution
-        
 """

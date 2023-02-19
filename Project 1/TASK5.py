@@ -28,6 +28,7 @@ class NodeObj:
         )
 
 
+# extractUniqueKeys uses the sorted order of the days to return list of unique startDays which can be used for jumping to next smallest interval
 def extractUniqueKeys(days, n):
     keysSet = []
     prev = -1
@@ -49,7 +50,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     # An array which stores the indices of houses painted.
     resultIndicesArr: List[int] = []
 
-    # unique days of length m
+    # unique days of atmost length m
     keysSet = extractUniqueKeys(days, n)
 
     # no interval has a startDay <= n
@@ -60,7 +61,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     keySetIdx = 0
 
     while startDay <= n:
-        # update the latest keySet index to jump to the next available day when no value exists in the heap
+        # update the latest keySet index inorder to jump to the next available day when no value exists in the heap
         if keySetIdx < len(keysSet) and keysSet[keySetIdx] <= startDay:
             keySetIdx += 1
 
@@ -73,7 +74,8 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
                 )
             daysIdx += 1
 
-        # If there exists more houses to paint but we have none in our priority queue, then we just to the next possible startDay
+        # If there exists more houses to paint but we have none in our priority queue, then we just jump to the next lowest interval
+        # with interval's startDay greater than current startDay. If there are no more houses to paint, then we exit the loop
         if len(earliestEndDayHeap) == 0:
             if keySetIdx == len(keysSet):
                 break

@@ -10,6 +10,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     resultIndicesArr: List[int] = []
 
     for startDay in range(1, n + 1):
+        # we exit the loop as all the intervals have been processed and we are left with no more houses to paint.
         if daysIdx == m:
             break
 
@@ -30,7 +31,7 @@ SPACE COMPLEXITY : O(n)
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm yield an optimal answer?
-=> When the start dates of each house are arranged in strictly increasing order
+=> When the startDays are unique, this algorithm gives an optimal solution
 => n = 5; m = 4; days = [(1,2), (2,3), (3,4), (4,5)]
 
 => According to current algorithm:
@@ -46,19 +47,19 @@ Optimal Solution:
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm doesn't yield an optimal answer?
-=> When the initial houses have a large deadline with them and the next houses have a short deadline
-=> n = 5; m = 4; days = [(1,2), (1,3), (1,4), (2,3)]
+=> When the initial houses have longer intervals compared to the subsequent houses, this algorithm gives a non-optimal solution
+=> n = 4; m = 4; days = [(1,4), (1,4), (1,4), (2,3)]
 
 => According to current algorithm:
-1) House at index 0 is painted on day 1 => 1 lies between (1, 2)
-2) House at index 1 is painted on day 2 => 2 lies between (1, 3)
-3) House at index 2 is painted on day 3 => 3 lies between (1, 4)
-4) House at index 3 cannot be painted   => 4 doesn't lie between (2,3)
+1) House at index 0 is painted on day 1         => 1 lies between (1, 4)
+2) House at index 1 is painted on day 2         => 2 lies between (1, 4)
+3) House at index 2 is painted on day 3         => 3 lies between (1, 4)
+4) House at index 3 cannot be painted on day 4  => 4 doesn't lie between (2,3)
 => Total number of houses painted = 3 (0, 1, 2)
 
 Optimal Solution:
-1) House at index 0 is painted on day 1 => 1 lies between (1, 2)
-2) House at index 1 is painted on day 2 => 2 lies between (1, 3)
+1) House at index 0 is painted on day 1 => 1 lies between (1, 4)
+2) House at index 1 is painted on day 2 => 2 lies between (1, 4)
 3) House at index 3 is painted on day 3 => 3 lies between (2, 3)
 4) House at index 2 is painted on day 4 => 4 lies between (1, 4)
 => Total number of house painted = 4 (0, 1, 3, 2)
