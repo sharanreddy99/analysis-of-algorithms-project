@@ -1,6 +1,7 @@
 import json
+import math
 import os
-from random import choice, randint
+from random import choice, randint, random
 import sys
 from IPython.display import display
 import pandas as pd
@@ -54,14 +55,14 @@ def readDummyInput():
 
 # generateDummyInput generates the dummy data based on user's input requirements
 def generateDummyInput(minV, maxV):
-    n = randint(minV, maxV)
-    m = randint(minV, n + 1)
+    n = randint(maxV, 100000)
+    m = randint(1, 100)
     start = -1
     end = -2
     days = []
     while len(days) < m:
         start = randint(minV, n + 1)
-        end = randint(minV, maxV)
+        end = randint(minV, n + 1)
         if start < end:
             days.append((start, end))
 
@@ -78,7 +79,7 @@ def plotPandasTable():
         i: {
             "combinedData": [],
         }
-        for i in range(1, 5)
+        for i in range(1, 6)
     }
 
     dirList = os.listdir("./output")
@@ -98,16 +99,16 @@ def plotPandasTable():
                     )
                 )
 
-    for i in range(1, 5):
+    for i in range(1, 6):
         dataArr[i]["combinedData"].sort(key=lambda x: x[0])
 
     dataMap = {}
     colIndices = []
-    for i in range(1, 5):
+    for i in range(1, 6):
         colIndices.append(("TASK - " + str(i), "Painted Houses"))
         colIndices.append(("TASK - " + str(i), "Execution Time"))
 
-    for idx in range(1, 5):
+    for idx in range(1, 6):
         for row in dataArr[idx]["combinedData"]:
             key = (row[0], row[1])
             dataMap[key] = dataMap.get(key, [])

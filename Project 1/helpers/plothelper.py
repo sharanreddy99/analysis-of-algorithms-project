@@ -25,7 +25,7 @@ def plotDataFromOutputFile():
             "respLength": [],
             "executionTime": [],
         }
-        for i in range(1, 5)
+        for i in range(1, 6)
     }
 
     dirList = os.listdir("./output")
@@ -34,6 +34,7 @@ def plotDataFromOutputFile():
         2: {"borderStyle": "r-."},
         3: {"borderStyle": "k-o"},
         4: {"borderStyle": "c-*"},
+        5: {"borderStyle": "b->"},
     }
     for key in dataArr:
         for attribute in attributesMap[key]:
@@ -53,7 +54,7 @@ def plotDataFromOutputFile():
                     dataArr[data["task"]][key].append(data[key])
                     dataArr[data["task"]]["label"] = "TASK - {0}".format(data["task"])
 
-    for i in range(1, 5):
+    for i in range(1, 6):
         dataArr[i][combinedDataKey] = list(
             zip(dataArr[i][xaxisAttributeName], dataArr[i][yaxisAttributeName])
         )
