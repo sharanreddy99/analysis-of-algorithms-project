@@ -34,6 +34,7 @@ if __name__ == "__main__":
         plotPandasTable()
     else:
         n, m, days = readInput()
+        days.sort()
         funcCall = prepareFunctionCall()
         res = []
         if len(days) > 0:
