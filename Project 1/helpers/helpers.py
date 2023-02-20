@@ -104,13 +104,14 @@ def generateRandomInputFile():
     minV = int(sys.argv[2])
     maxV = int(sys.argv[3])
     testCases = int(sys.argv[4])
+    task = int(sys.argv[5])
     writeFile = (
         "testcases_" + "".join(random.choices(string.ascii_lowercase, k=8)) + ".txt"
     )
 
     with open("./input/" + writeFile, "w") as fp:
         for i in range(testCases):
-            n, m, days = generateDummyInput(minV, maxV)
+            n, m, days = generateDummyInput(minV, maxV, task)
             fp.write(json.dumps(n) + "\n")
             fp.write(json.dumps(m) + "\n")
             fp.write(json.dumps(days) + "\n")

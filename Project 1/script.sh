@@ -10,12 +10,13 @@ for ((x = 1; x <= $noOfPlots; x++)); do
     tasks=1,2,3,4
     highest=10000
     step=500
+    taskId=1
     outputRespFolder="./plots/Plot$x/"
     n=$((highest / step))
 
     rm -rf input/* output/*
     for ((i = 1; i <= n; i++)); do
-        make rungentest minval=$minVal maxval=$maxVal testcases=$testCases
+        make rungentest minval=$minVal maxval=$maxVal testcases=$testCases task=$taskId
         inpFileName=$(find ./input -printf '%T+ %p\n' | sort -r | head -n1 | awk '{print $2}' | awk -F '/' '{print $3}')
         make runfromtestfile tasks=$tasks filename=$inpFileName
         ((maxVal += step))

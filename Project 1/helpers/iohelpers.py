@@ -1,9 +1,11 @@
 import json
 import os
-from random import choice, randint
+from random import randint
 import sys
-from IPython.display import display
-import pandas as pd
+
+# import pandas as pd
+
+from .randomlogichelper import task1generator, task2generator, task3generator
 
 
 # DisplayOutput displays the output
@@ -53,73 +55,64 @@ def readDummyInput():
 
 
 # generateDummyInput generates the dummy data based on user's input requirements
-def generateDummyInput(minV, maxV):
-    n = randint(minV, maxV)
-    m = randint(minV, n + 1)
-    start = -1
-    end = -2
-    days = []
-    while len(days) < m:
-        start = randint(minV, n + 1)
-        end = randint(minV, maxV)
-        if start < end:
-            days.append((start, end))
-
+def generateDummyInput(minV, maxV, task):
+    n, m, days = eval("task{0}generator(minV, maxV)".format(task))
     return n, m, days
 
 
 def plotPandasTable():
-    filename = sys.argv[2]
-    foldername = sys.argv[3]
-    createFolderIfDoesntExist(foldername)
-    filename = foldername + filename
+    pass
+    # filename = sys.argv[2]
+    # foldername = sys.argv[3]
+    # createFolderIfDoesntExist(foldername)
+    # filename = foldername + filename
 
-    dataArr = {
-        i: {
-            "combinedData": [],
-        }
-        for i in range(1, 6)
-    }
+    # dataArr = {
+    #     i: {
+    #         "combinedData": [],
+    #     }
+    #     for i in range(1, 6)
+    # }
 
-    dirList = os.listdir("./output")
-    for fileName in dirList:
-        with open("./output/" + fileName, "r") as fp:
-            while True:
-                chunk = fp.readline().rstrip("\n ")
-                if chunk == "":
-                    break
-                data = json.loads(chunk)
-                dataArr[data["task"]]["combinedData"].append(
-                    (
-                        data["n"],
-                        data["m"],
-                        data["respLength"],
-                        data["executionTime"],
-                    )
-                )
+    # dirList = os.listdir("./output")
+    # for fileName in dirList:
+    #     with open("./output/" + fileName, "r") as fp:
+    #         while True:
+    #             chunk = fp.readline().rstrip("\n ")
+    #             if chunk == "":
+    #                 break
+    #             data = json.loads(chunk)
+    #             dataArr[data["task"]]["combinedData"].append(
+    #                 (
+    #                     data["n"],
+    #                     data["m"],
+    #                     data["respLength"],
+    #                     data["executionTime"],
+    #                 )
+    #             )
 
-    for i in range(1, 6):
-        dataArr[i]["combinedData"].sort(key=lambda x: x[0])
+    # for i in range(1, 6):
+    #     dataArr[i]["combinedData"].sort(key=lambda x: x[0])
 
-    dataMap = {}
-    colIndices = []
-    for i in range(1, 6):
-        colIndices.append(("TASK - " + str(i), "Painted Houses"))
-        colIndices.append(("TASK - " + str(i), "Execution Time"))
+    # dataMap = {}
+    # colIndices = []
+    # for i in range(1, 6):
+    #     colIndices.append(("TASK - " + str(i), "Painted Houses"))
+    #     colIndices.append(("TASK - " + str(i), "Execution Time"))
 
-    for idx in range(1, 6):
-        for row in dataArr[idx]["combinedData"]:
-            key = (row[0], row[1])
-            dataMap[key] = dataMap.get(key, [])
-            dataMap[key].append(row[2])
-            dataMap[key].append(row[3])
+    # for idx in range(1, 6):
+    #     for row in dataArr[idx]["combinedData"]:
+    #         key = (row[0], row[1])
+    #         dataMap[key] = dataMap.get(key, [])
+    #         dataMap[key].append(row[2])
+    #         dataMap[key].append(row[3])
 
-    rowIdx = pd.MultiIndex.from_tuples(list(dataMap.keys()), names=["n", "m"])
-    colIdx = pd.MultiIndex.from_tuples(colIndices)
-    df = pd.DataFrame(list(dataMap.values()), index=rowIdx, columns=colIdx)
+    # rowIdx = pd.MultiIndex.from_tuples(list(dataMap.keys()), names=["n", "m"])
+    # colIdx = pd.MultiIndex.from_tuples(colIndices)
+    # df = pd.DataFrame(list(dataMap.values()), index=rowIdx, columns=colIdx)
 
-    with open(filename, "w") as fp:
-        fp.write(df.style.applymap(lambda x: "color:green;").to_html())
+    # with open(filename, "w") as fp:
+    #     fp.write(df.style.applymap(lambda x: "color:green;").to_html())
 
 
 def createFolderIfDoesntExist(path):

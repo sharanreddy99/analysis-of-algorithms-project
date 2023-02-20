@@ -13,7 +13,7 @@ runmultiple:
 runsingle:
 	python3 main.py singleinput ${taska} ${taskb}
 rungentest:
-	python3 main.py generatetestcases ${minval} ${maxval} ${testcases}
+	python3 main.py generatetestcases ${minval} ${maxval} ${testcases} ${task}
 runfromtestfile:
 	python3 main.py runfromtestfile ${tasks} ${filename}
 runplotoutput:

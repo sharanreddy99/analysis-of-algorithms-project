@@ -1,7 +1,8 @@
 import json
 import os
 import sys
-from matplotlib import pyplot as plt
+
+# from matplotlib import pyplot as plt
 
 from helpers.iohelpers import createFolderIfDoesntExist
 
@@ -76,10 +77,11 @@ def plotDataFromOutputFile():
 
 
 def plotLineGraph(dataArr, xLabel, yLabel, filename):
-    for row in dataArr:
-        plt.plot(row["xData"], row["yData"], row["borderStyle"], label=row["label"])
+    pass
+    # for row in dataArr:
+    #     plt.plot(row["xData"], row["yData"], row["borderStyle"], label=row["label"])
 
-    plt.xlabel(xLabel, labelpad=5)
-    plt.ylabel(yLabel, labelpad=5)
-    plt.legend(loc="upper left")
-    plt.savefig(filename)
+    # plt.xlabel(xLabel, labelpad=5)
+    # plt.ylabel(yLabel, labelpad=5)
+    # plt.legend(loc="upper left")
+    # plt.savefig(filename)
