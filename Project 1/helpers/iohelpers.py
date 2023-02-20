@@ -64,6 +64,7 @@ def plotPandasTable():
     pass
     # filename = sys.argv[2]
     # foldername = sys.argv[3]
+    # tasks = list(map(int, sys.argv[4].split(",")))
     # createFolderIfDoesntExist(foldername)
     # filename = foldername + filename
 
@@ -71,7 +72,7 @@ def plotPandasTable():
     #     i: {
     #         "combinedData": [],
     #     }
-    #     for i in range(1, 6)
+    #     for i in tasks
     # }
 
     # dirList = os.listdir("./output")
@@ -91,16 +92,16 @@ def plotPandasTable():
     #                 )
     #             )
 
-    # for i in range(1, 6):
+    # for i in tasks:
     #     dataArr[i]["combinedData"].sort(key=lambda x: x[0])
 
     # dataMap = {}
     # colIndices = []
-    # for i in range(1, 6):
+    # for i in tasks:
     #     colIndices.append(("TASK - " + str(i), "Painted Houses"))
     #     colIndices.append(("TASK - " + str(i), "Execution Time"))
 
-    # for idx in range(1, 6):
+    # for idx in tasks:
     #     for row in dataArr[idx]["combinedData"]:
     #         key = (row[0], row[1])
     #         dataMap[key] = dataMap.get(key, [])

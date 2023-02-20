@@ -14,6 +14,7 @@ def plotDataFromOutputFile():
     yLabel = sys.argv[5]
     filename = sys.argv[6]
     foldername = sys.argv[7]
+    tasks = list(map(int, sys.argv[8].split(",")))
     createFolderIfDoesntExist(foldername)
     filename = foldername + filename
 
@@ -26,7 +27,7 @@ def plotDataFromOutputFile():
             "respLength": [],
             "executionTime": [],
         }
-        for i in range(1, 6)
+        for i in tasks
     }
 
     dirList = os.listdir("./output")
@@ -55,7 +56,7 @@ def plotDataFromOutputFile():
                     dataArr[data["task"]][key].append(data[key])
                     dataArr[data["task"]]["label"] = "TASK - {0}".format(data["task"])
 
-    for i in range(1, 6):
+    for i in tasks:
         dataArr[i][combinedDataKey] = list(
             zip(dataArr[i][xaxisAttributeName], dataArr[i][yaxisAttributeName])
         )

@@ -19,7 +19,7 @@ def task1generator(minV, maxV):
 
 def task2generator(minV, maxV):
     n = randint(minV, maxV)
-    m = randint(minV, n)
+    m = randint(minV, n // 80)
     start = -1
     end = -2
     days = []
@@ -54,7 +54,7 @@ def task2generator(minV, maxV):
 
 def task3generator(minV, maxV):
     n = randint(minV, maxV)
-    m = randint(minV, n)
+    m = randint(minV, n // 80)
     if m < 5:
         m += 5
         n += 5
