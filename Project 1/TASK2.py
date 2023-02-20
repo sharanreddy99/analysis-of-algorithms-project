@@ -34,7 +34,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     # An array which stores the indices of houses painted.
     resultIndicesArr: List[int] = []
 
-    for startDay in range(1, n + 1):
+    for startDay in range(n):
         # We store all the houses that atmost begin at currentDay
         while daysIdx < m and days[daysIdx][0] <= startDay:
             if days[daysIdx][1] >= startDay:
@@ -66,7 +66,7 @@ SPACE COMPLEXITY : O(m)
 
 => Instance where this algorithm yield an optimal answer?
 => When the initial houses have longer intervals compared to the subsequent intervals
-=> n = 4; m = 4; days = [(1,5), (1,5), (1,5), (2,3)]
+=> n = 5; m = 4; days = [(1,5), (1,5), (1,5), (2,3)]
 
 According to current algorithm:
 1) House at index 2 is painted on day 1 => 1 lies between (1, 5)
@@ -82,7 +82,7 @@ The above solution is the optimal one as it paints all the houses available
 
 => Instance where this algorithm doesn't yield an optimal answer?
 => When the initial houses have shorter intervals compared to the subsequent intervals.
-=> n = 5; m = 5; days = [(1,2), (1,3), (1,4), (2, 5), (3, 5)]
+=> n = 6; m = 5; days = [(1,2), (1,3), (1,4), (2, 5), (3, 5)]
 
 According to current algorithm:
 1) House at index 2 is painted on day 1 => 1 lies between (1, 4)

@@ -40,7 +40,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     # An array which stores the indices of houses painted.
     resultIndicesArr: List[int] = []
 
-    for startDay in range(1, n + 1):
+    for startDay in range(n):
         # We store all the houses that atmost begin at currentDay
         while daysIdx < m and days[daysIdx][0] <= startDay:
             if days[daysIdx][1] >= startDay:

@@ -70,7 +70,7 @@ SPACE COMPLEXITY : O(m)
 
 => Instance where this algorithm yield an optimal answer?
 => When the initial houses have a shorter intervals compared to the subsequent intervals
-=> n = 4; m = 4; days = [(1,2), (1,3), (2,5), (3,5)]
+=> n = 5; m = 4; days = [(1,2), (1,3), (2,5), (3,5)]
 
 According to current algorithm:
 1) House at index 0 is painted on day 1 => 1 lies between (1, 2)
@@ -86,7 +86,7 @@ The above solution is the optimal one as it paints all the houses available
 
 => Instance where this algorithm doesn't yield an optimal answer?
 => When there exists a larger interval but is dominated by many smaller intervals.
-=> n = 4; m = 4; days = [(1,2), (1,3), (2,3), (3,4)]
+=> n = 5; m = 4; days = [(1,2), (1,3), (2,3), (3,4)]
 
 According to current algorithm:
 1) House at index 0 is painted on day 1 => 1 lies between (1, 2)
