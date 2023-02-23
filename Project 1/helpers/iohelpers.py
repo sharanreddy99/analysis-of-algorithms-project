@@ -21,24 +21,28 @@ def readInput():
         int,
         input(
             "Enter no of days (n) and number of houses (m) separated by spaces: "
-        ).split(),
+        ).split(" "),
     )
     days = []
 
     # Read the start and end days of the m houses
     for i in range(m):
-        days.append(
-            tuple(
-                map(
-                    int,
-                    input(
-                        "Enter startDay, endDay for interval "
-                        + str(i + 1)
-                        + " sepeareted by a space: "
-                    ).split(),
-                )
+        inp = tuple(
+            map(
+                int,
+                input(
+                    "Enter startDay, endDay for interval "
+                    + str(i + 1)
+                    + " sepeareted by a space: "
+                ).split(" "),
             )
         )
+
+        if len(inp) != 2:
+            print("Invalid interval. exiting ")
+            exit(0)
+
+        days.append(inp)
 
     return n, m, days
 
