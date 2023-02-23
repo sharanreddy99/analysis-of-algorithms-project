@@ -54,7 +54,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
         while len(shortestDurationHeap) > 0:
             node: NodeObj = heapq.heappop(shortestDurationHeap)
             if startDay >= node.startDay and startDay <= node.endDay:
-                resultIndicesArr.append(node.index)
+                resultIndicesArr.append(node.index + 1)
                 break
 
     return resultIndicesArr
@@ -73,11 +73,11 @@ SPACE COMPLEXITY : O(m)
 => n = 5; m = 4; days = [(1,2), (1,3), (2,5), (3,5)]
 
 According to current algorithm:
-1) House at index 0 is painted on day 1 => 1 lies between (1, 2)
-2) House at index 1 is painted on day 2 => 2 lies between (1, 3)
-3) House at index 3 is painted on day 3 => 3 lies between (3, 5)
-3) House at index 2 is painted on day 4 => 4 lies between (2, 5)
-Total number of houses painted = 4 (0, 1 3, 2)
+1) House at index 1 is painted on day 1 => 1 lies between (1, 2)
+2) House at index 2 is painted on day 2 => 2 lies between (1, 3)
+3) House at index 4 is painted on day 3 => 3 lies between (3, 5)
+3) House at index 3 is painted on day 4 => 4 lies between (2, 5)
+Total number of houses painted = 4 (1, 2 4, 3)
 
 Optimal Solution:
 The above solution is the optimal one as it paints all the houses available
@@ -89,17 +89,17 @@ The above solution is the optimal one as it paints all the houses available
 => n = 5; m = 4; days = [(1,2), (1,3), (2,3), (3,4)]
 
 According to current algorithm:
-1) House at index 0 is painted on day 1 => 1 lies between (1, 2)
-2) House at index 2 is painted on day 2 => 2 lies between (2, 3)
-3) House at index 3 is painted on day 3 => 4 lies between (3, 4)
-4) House at index 1 cannot be painted on day 4 and above => 4 doesn't lie between (1, 3)
-Total number of houses painted = 3 (0, 2, 3)
+1) House at index 1 is painted on day 1 => 1 lies between (1, 2)
+2) House at index 3 is painted on day 2 => 2 lies between (2, 3)
+3) House at index 4 is painted on day 3 => 4 lies between (3, 4)
+4) House at index 2 cannot be painted on day 4 and above => 4 doesn't lie between (1, 3)
+Total number of houses painted = 3 (1, 3, 4)
 
 Optimal Solution:
-1) House at index 0 is painted on day 1 => 1 lies between (1, 2)
-2) House at index 1 is painted on day 2 => 2 lies between (1, 3)
-3) House at index 2 is painted on day 3 => 3 lies between (2, 3)
-4) House at index 3 is painted on day 4 => 4 lies between (3, 4)
-Total number of house painted = 4 (0, 1, 2, 3)
+1) House at index 1 is painted on day 1 => 1 lies between (1, 2)
+2) House at index 2 is painted on day 2 => 2 lies between (1, 3)
+3) House at index 3 is painted on day 3 => 3 lies between (2, 3)
+4) House at index 4 is painted on day 4 => 4 lies between (3, 4)
+Total number of house painted = 4 (1, 2, 3, 4)
 
 """
