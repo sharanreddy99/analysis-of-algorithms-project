@@ -21,7 +21,7 @@ def compareOptimalTasksWithMultipleInput():
     with open("./output/output.json", "w") as fp:
         args = sys.argv
         for i in range(int(args[5])):
-            n, m, days = generateDummyInput(int(args[3]), int(args[4]))
+            n, m, days = generateDummyInput(int(args[3]), int(args[4]), int(args[6]))
             days.sort()
             fp.write(
                 "Input: n ({0}), m: ({1}), days: ${2}\n".format(n, m, json.dumps(days))
@@ -55,7 +55,7 @@ def compareOptimalTasksWithSingleInput():
         args = sys.argv
         n, m, days = readDummyInput()
         if len(args) == 6:
-            n, m, days = generateDummyInput(int(args[4]), int(args[5]))
+            n, m, days = generateDummyInput(int(args[4]), int(args[5]), int(args[6]))
         fp.write(
             "Comparision between task-{0} and task{1}\n_____________________________\n".format(
                 int(args[2]), int(args[3])
@@ -89,13 +89,14 @@ def compareOptimalTasksWithSingleInput():
 def areResultsEqual(res1, res2):
     res1.sort()
     res2.sort()
-    isEqual = len(res1) <= len(res2)
-    if not isEqual:
-        for i in range(len(res1)):
-            if res1[i] != res2[i]:
-                break
-        else:
-            isEqual = True
+
+    isEqual = len(res1) == len(res2)
+    # if not isEqual:
+    #     for i in range(len(res2)):
+    #         if res1[i] != res2[i]:
+    #             break
+    #     else:
+    #         isEqual = True
 
     return "True" if isEqual else "False"
 

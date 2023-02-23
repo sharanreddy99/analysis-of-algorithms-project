@@ -9,9 +9,9 @@ run4:
 run5:
 	python3 main.py 5
 runmultiple:
-	python3 main.py multipleinput ${tasks} ${minval} ${maxval} ${testcases}
+	python3 main.py multipleinput ${tasks} ${minval} ${maxval} ${testcases} ${task}
 runsingle:
-	python3 main.py singleinput ${taska} ${taskb}
+	python3 main.py singleinput ${taska} ${taskb} ${minval} ${maxval} ${task}
 rungentest:
 	python3 main.py generatetestcases ${minval} ${maxval} ${testcases} ${task}
 runfromtestfile:

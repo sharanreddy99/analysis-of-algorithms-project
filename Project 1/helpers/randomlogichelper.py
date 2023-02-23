@@ -10,9 +10,10 @@ def task1generator(minV, maxV):
     days = []
     while len(days) < m:
         start = randint(minV, n)
-        end = randint(start + 1, maxV)
-        if start < end:
-            days.append((start, end))
+        if start + 1 < maxV:
+            end = randint(start + 1, maxV)
+            if start < end:
+                days.append((start, end))
 
     return n, m, days
 

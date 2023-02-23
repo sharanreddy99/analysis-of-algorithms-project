@@ -60,7 +60,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
     startDay = max(1, keysSet[0])
     keySetIdx = 0
 
-    while startDay < n:
+    while startDay <= n:
         # update the latest keySet index inorder to jump to the next available day when no value exists in the heap
         if keySetIdx < len(keysSet) and keysSet[keySetIdx] <= startDay:
             keySetIdx += 1
