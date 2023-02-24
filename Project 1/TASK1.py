@@ -14,11 +14,17 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
         if daysIdx == m:
             break
 
+        # while daysIdx < len(days) and days[daysIdx][1] < startDay:
+        #     daysIdx += 1
+
         # If the current days lies between the start and end days of the house, we paint it.
-        if startDay >= days[daysIdx][0] and startDay <= days[daysIdx][1]:
+        if (
+            daysIdx < len(days)
+            and startDay >= days[daysIdx][0]
+            and startDay <= days[daysIdx][1]
+        ):
             resultIndicesArr.append(daysIdx + 1)
             daysIdx += 1
-            startDay += 1
 
     return resultIndicesArr
 
