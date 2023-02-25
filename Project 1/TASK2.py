@@ -87,22 +87,23 @@ The above solution is the optimal one as it paints all the houses available
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 => Instance where this algorithm doesn't yield an optimal answer?
-=> When the initial houses have shorter intervals compared to the subsequent intervals.
-=> n = 6; m = 5; days = [(1,2), (1,3), (1,4), (2, 5), (3, 5)]
+=> When the initial houses have shorter endDays compared to the subsequent intervals.
+=> n = 6; m = 5; days = [(1,4), (1,4), (2,5), (3,5), (4, 5)]
 
 According to current algorithm:
-1) House at index 3 is painted on day 1 => 1 lies between (1, 4)
-2) House at index 4 is painted on day 2 => 1 lies between (2, 5)
-3) House at index 5 is painted on day 3 => 1 lies between (3, 5)
-4) House at index 1 and index 1 cannot be painted on day 4 or above
-Total number of houses painted = 3 (3, 4, 5)
+1) House at index 2 is painted on day 1 => 1 lies between (1, 4)
+2) House at index 3 is painted on day 2 => 2 lies between (2, 5)
+3) House at index 4 is painted on day 3 => 3 lies between (3, 5)
+3) House at index 5 is painted on day 4 => 4 lies between (4, 5)
+4) House at index 1 cannot be painted on day 5 or above
+Total number of houses painted = 4 (2, 3, 4, 5)
 
 Optimal Solution:
-1) House at index 1 is painted on day 1 => 1 lies between (1, 2)
-2) House at index 2 is painted on day 2 => 2 lies between (1, 3)
-3) House at index 3 is painted on day 3 => 3 lies between (1, 4)
-4) House at index 4 is painted on day 4 => 4 lies between (2, 5)
-4) House at index 5 is painted on day 5 => 5 lies between (3, 5)
+1) House at index 1 is painted on day 1 => 1 lies between (1, 4)
+2) House at index 2 is painted on day 2 => 2 lies between (1, 4)
+3) House at index 3 is painted on day 3 => 3 lies between (2, 5)
+4) House at index 4 is painted on day 4 => 4 lies between (3, 5)
+4) House at index 5 is painted on day 5 => 5 lies between (4, 5)
 Total number of house painted = 5 (1, 2, 3, 4, 5)
 
 """
