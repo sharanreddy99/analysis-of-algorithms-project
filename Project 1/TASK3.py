@@ -91,7 +91,7 @@ The above solution is the optimal one as it paints all the houses available
 According to current algorithm:
 1) House at index 1 is painted on day 1 => 1 lies between (1, 2)
 2) House at index 3 is painted on day 2 => 2 lies between (2, 3)
-3) House at index 4 is painted on day 3 => 4 lies between (3, 4)
+3) House at index 4 is painted on day 3 => 3 lies between (3, 4)
 4) House at index 2 cannot be painted on day 4 and above => 4 doesn't lie between (1, 3)
 Total number of houses painted = 3 (1, 3, 4)
 
