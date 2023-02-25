@@ -14,8 +14,8 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
         if daysIdx == m:
             break
 
-        # while daysIdx < len(days) and days[daysIdx][1] < startDay:
-        #     daysIdx += 1
+        while daysIdx < len(days) and days[daysIdx][1] < startDay:
+            daysIdx += 1
 
         # If the current days lies between the start and end days of the house, we paint it.
         if (
@@ -31,7 +31,7 @@ def main(n: int, m: int, days: List[int]) -> List[int]:
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-TIME COMPLEXITY  : O(n)
+TIME COMPLEXITY  : O(n) when m <= n and O(n+m) when m > n
 SPACE COMPLEXITY : O(m)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------

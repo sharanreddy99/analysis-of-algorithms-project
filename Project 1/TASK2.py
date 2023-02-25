@@ -19,8 +19,14 @@ class NodeObj:
     # we will be passing negative startDay and indices so that the values are sorted in descending order.
     # We will be converting them to positives again once we pop them
     def __lt__(self, other):
-        return (self.startDay < other.startDay) or (
-            (self.startDay == other.startDay) and (self.index < other.index)
+        return (
+            (self.startDay < other.startDay)
+            or ((self.startDay == other.startDay) and (self.endDay < other.endDay))
+            or (
+                (self.startDay == other.startDay)
+                and (self.endDay == other.endDay)
+                and (self.index < other.index)
+            )
         )
 
 
