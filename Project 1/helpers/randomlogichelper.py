@@ -1,9 +1,10 @@
 import math
 from random import randint
+import sys
 
 
 def task1generator(minV, maxV):
-    n = randint(minV, maxV)
+    n = int(sys.argv[6])
     m = randint(minV, n)
     start = -1
     end = -2
@@ -80,5 +81,21 @@ def task3generator(minV, maxV):
                 if newstart < newend:
                     days.append((newstart, newend))
                     counter -= 1
+
+    return n, m, days
+
+
+def task4generator(minV, maxV):
+    n = int(sys.argv[6])
+    m = int(sys.argv[7])
+    start = -1
+    end = -2
+    days = []
+    while len(days) < m:
+        start = randint(minV, n)
+        if start + 20 < maxV:
+            end = randint(start + 1, start + 20)
+            if start < end:
+                days.append((start, end))
 
     return n, m, days
