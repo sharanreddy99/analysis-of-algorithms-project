@@ -71,6 +71,7 @@ def plotDataFromOutputFile():
                 "xData": [row[0] for row in dataArr[key][combinedDataKey]],
                 "yData": [row[1] for row in dataArr[key][combinedDataKey]],
                 "n": dataArr[key]["n"][0],
+                "m": dataArr[key]["m"][0],
                 "label": dataArr[key]["label"],
                 "borderStyle": dataArr[key]["borderStyle"],
                 "color": dataArr[key]["color"],
@@ -102,7 +103,7 @@ def plotBarGraph(dataArr, xLabel, yLabel, fileName):
     }
 
     x = np.arange(len(xAxisData))
-    width = 0.25
+    width = 0.15
     multiplier = 0
 
     _, ax = plt.subplots(constrained_layout=True)
@@ -115,7 +116,7 @@ def plotBarGraph(dataArr, xLabel, yLabel, fileName):
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_xlabel(xLabel)
     ax.set_ylabel(yLabel)
-    ax.set_title("{0} vs {1} when n = {2}".format(xLabel, yLabel, dataArr[0]["n"]))
+    ax.set_title("{0} vs {1} when m = {2}".format(xLabel, yLabel, dataArr[0]["m"]))
     ax.set_xticks(x + width, xAxisData)
     ax.legend(loc="upper left", ncols=1)
 
