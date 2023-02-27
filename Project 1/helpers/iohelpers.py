@@ -26,7 +26,7 @@ def readInput():
     n, m = map(
         int,
         input(
-            "Enter no of days (n) and number of houses (m) separated by spaces: "
+            # "Enter no of days (n) and number of houses (m) separated by spaces: "
         ).split(" "),
     )
     days = []
@@ -37,9 +37,9 @@ def readInput():
             map(
                 int,
                 input(
-                    "Enter startDay, endDay for interval "
-                    + str(i + 1)
-                    + " sepeareted by a space: "
+                    # "Enter startDay, endDay for interval "
+                    # + str(i + 1)
+                    # + " sepeareted by a space: "
                 ).split(" "),
             )
         )
