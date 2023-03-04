@@ -1,0 +1,8 @@
+Statement.pdf
+output*.json
+__pycache__
+.vscode
+testcases*
+plots
+Docs
+*.pdf
