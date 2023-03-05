@@ -21,7 +21,7 @@ class Main:
         self.initDPArray()
 
     def initDPArray(self):
-        # DP[i,j] indicates the largest square plot whose bottomRight corner is i,j
+        # DP[i,j] indicates the size of the largest square plot whose bottomRight corner is i,j
         self.dp = [[0 for j in range(self.n + 1)] for i in range(2)]
 
     def main(self):

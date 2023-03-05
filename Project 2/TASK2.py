@@ -21,7 +21,7 @@ class Main:
         self.initDPArray()
 
     def initDPArray(self):
-        # Stores the count of square plots less than h.
+        # Stores the count of plots in a given plot that satisfy the min trees requirement.
         self.dp = [0 for i in range(self.n)]
 
     def main(self):
