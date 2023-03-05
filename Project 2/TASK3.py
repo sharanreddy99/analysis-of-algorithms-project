@@ -18,8 +18,11 @@ class Main:
         # Size of the maximal square plot
         self.maxSquareLen = 0
 
+        self.initDPArray()
+
+    def initDPArray(self):
         # DP[i,j] indicates the largest square plot whose bottomRight corner is i,j
-        self.dp = [[0 for j in range(n + 1)] for i in range(2)]
+        self.dp = [[0 for j in range(self.n + 1)] for i in range(2)]
 
     def main(self):
         for i in range(1, self.m + 1):
