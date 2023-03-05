@@ -36,9 +36,7 @@ class Main:
                 # in the given square based on the precomputed value from the previous row.
                 for rowEnd in range(rowStart, self.m):
                     for colEnd in range(colStart, self.n):
-                        self.dp[rowEnd][colEnd] += (
-                            1 if self.p[rowEnd][colEnd] >= self.h else 0
-                        )
+                        self.dp[colEnd] += 1 if self.p[rowEnd][colEnd] >= self.h else 0
 
                         totRows = rowEnd - rowStart + 1
                         totCols = colEnd - colStart + 1
@@ -46,7 +44,7 @@ class Main:
                         # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if required.
                         if (
                             totRows == totCols
-                            and self.dp[rowEnd][colEnd] == totRows * totCols
+                            and self.dp[colEnd] == totRows * totCols
                             and totRows > self.maxSquareLen
                         ):
                             self.resultIndicesArr[0] = rowStart + 1
