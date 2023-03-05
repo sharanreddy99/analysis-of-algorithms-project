@@ -39,8 +39,9 @@ class Main:
 
                         # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if required.
                         if (
-                            totRows == totCols and validPlotsCount == totRows *
-                                totCols and totRows > self.maxSquareLen
+                            totRows == totCols
+                            and validPlotsCount == totRows * totCols
+                            and totRows > self.maxSquareLen
                         ):
                             self.resultIndicesArr[0] = rowStart + 1
                             self.resultIndicesArr[1] = colStart + 1

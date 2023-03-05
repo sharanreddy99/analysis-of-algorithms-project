@@ -22,7 +22,6 @@ class Main:
         # The first two loops fix the upper left corner for the given square plot.
         for rowStart in range(self.m):
             for colStart in range(self.n):
-
                 # validPlotsCount stores the number of valid individual plots in the chosen square plots.
                 validPlotsCount = 0
 
@@ -46,8 +45,9 @@ class Main:
 
                     # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if required.
                     if (
-                        totRows == totCols and validPlotsCount == totRows *
-                            totCols and totRows > self.maxSquareLen
+                        totRows == totCols
+                        and validPlotsCount == totRows * totCols
+                        and totRows > self.maxSquareLen
                     ):
                         self.resultIndicesArr[0] = rowStart + 1
                         self.resultIndicesArr[1] = colStart + 1

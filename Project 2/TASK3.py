@@ -24,11 +24,16 @@ class Main:
     def main(self):
         for i in range(1, self.m + 1):
             for j in range(1, self.n + 1):
-
                 # If the current square has valid number of trees, we find the smallest maximal square plot alongside the boundary of current plot and store it.
                 if self.p[i - 1][j - 1] >= self.h:
-                    self.dp[i % 2][j] = (min(
-                        self.dp[(i - 1) % 2][j], self.dp[(i - 1) % 2][j - 1], self.dp[i % 2][j - 1],) + 1)
+                    self.dp[i % 2][j] = (
+                        min(
+                            self.dp[(i - 1) % 2][j],
+                            self.dp[(i - 1) % 2][j - 1],
+                            self.dp[i % 2][j - 1],
+                        )
+                        + 1
+                    )
 
                 # We don't have any maximal square plots ending at current plot
                 else:
