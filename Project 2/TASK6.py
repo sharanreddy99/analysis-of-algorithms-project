@@ -25,23 +25,16 @@ class Main:
         # The first two loops fix the upper left corner for the given square plot.
         for rowStart in range(self.m):
             for colStart in range(self.n):
-
                 # The next two loops fix the lower right corner for the square plot whose upper left corner is fixed.
                 for rowEnd in range(rowStart, self.m):
                     for colEnd in range(colStart, self.n):
-
-                        # Counter which stores the number of valid individual plots in the chosen square plot.
-                        validPlotsCount = 0
-
                         # Counter which stores the number of invalid individual plots in the chosen square plot.
                         inValidPlotsCount = 0
 
                         # The next two loops iterate over each square in the square plot of chosen dimensions and counts the plots which satisfy the min tree requirement.
                         for x in range(rowStart, rowEnd + 1):
                             for y in range(colStart, colEnd + 1):
-                                if self.p[x][y] >= self.h:
-                                    validPlotsCount += 1
-                                else:
+                                if self.p[x][y] < self.h:
                                     inValidPlotsCount += 1
 
                         totRows = rowEnd - rowStart + 1
@@ -49,8 +42,9 @@ class Main:
 
                         # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement without crossing the exempted limit and store it if required.
                         if (
-                            totRows == totCols and inValidPlotsCount <= self.k and validPlotsCount +
-                                inValidPlotsCount == totRows * totCols and totRows > self.maxSquareLen
+                            totRows == totCols
+                            and inValidPlotsCount <= self.k
+                            and totRows > self.maxSquareLen
                         ):
                             self.resultIndicesArr[0] = rowStart + 1
                             self.resultIndicesArr[1] = colStart + 1
