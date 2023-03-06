@@ -117,8 +117,6 @@ class Main:
                             rowEnd, colEnd, length + inc, self.k
                         )
 
-            # print("TASK7B k - {0} => {1}".format(k, self.dp))
-
         return self.resultIndicesArr
 
 
