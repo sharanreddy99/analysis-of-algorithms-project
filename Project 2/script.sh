@@ -9,13 +9,15 @@ for ((x = 1; x <= $noOfTests; x++)); do
     n=8
     h=5
     maxDiff=2
-    testCases=10000
+    testCases=100000
     task=1
     outputRespFolder="./plots/Plot$x/"
 
-    make rungentest m=$m n=$n h=$h testcases=$testCases task=$task maxDiff=$maxDiff
-    inpFileName=$(find ./input -printf '%T+ %p\n' | sort -r | head -n1 | awk '{print $2}' | awk -F '/' '{print $3}')
-    make runfromtestfile tasks="1,2,3" filename=$inpFileName
-    make runfromtestfile tasks="4,5A,5B" filename=$inpFileName
-    make runfromtestfile tasks="6,7A,7B" filename=$inpFileName
+    make runmultiple tasks="4,5A,5B" m=$m n=$n h=$h testcases=$testCases task=$task maxDiff=$maxDiff
+    make runmultiple tasks="6,7A,7B" m=$m n=$n h=$h testcases=$testCases task=$task maxDiff=$maxDiff
+    # make rungentest m=$m n=$n h=$h testcases=$testCases task=$task maxDiff=$maxDiff
+    # inpFileName=$(find ./input -printf '%T+ %p\n' | sort -r | head -n1 | awk '{print $2}' | awk -F '/' '{print $3}')
+    # make runfromtestfile tasks="1,2,3" filename=$inpFileName
+    # make runfromtestfile tasks="4,5A,5B" filename=$inpFileName
+    # make runfromtestfile tasks="6,7A,7B" filename=$inpFileName
 done
