@@ -24,46 +24,75 @@ class Main:
         self.initDPArray()
 
     def initDPArray(self):
-        # We create a three dimensional array with 2,n,k as each dimension respectively.
-        # We only consider two dimensions in x axis as we require only the previous row to compute the optimal solution.
-        self.dp = [
-            [[0 for x in range(self.k + 1)] for j in range(self.n + 1)]
-            for i in range(2)
+        self.dp = [[0 for x in range(self.n + 1)] for y in range(self.m + 1)]
+
+        self.invalidCountArr = [
+            [0 for i in range(self.n + 1)] for j in range(self.m + 1)
         ]
 
-    def main(self):
         for i in range(1, self.m + 1):
             for j in range(1, self.n + 1):
-                for x in range(self.k + 1):
-                    # If the current square has valid number of trees, we find the smallest maximal square plot alongside the boundary of current plot and store it.
-                    if self.p[i - 1][j - 1] >= self.h:
-                        self.dp[i % 2][j][x] = 1 + min(self.dp[(i - 1) % 2][j][x], self.dp[(
-                            i - 1) % 2][j - 1][x], self.dp[i % 2][j - 1][x])
+                self.invalidCountArr[i][j] = (
+                    self.invalidCountArr[i][j - 1]
+                    + self.invalidCountArr[i - 1][j]
+                    - self.invalidCountArr[i - 1][j - 1]
+                    + (1 if self.p[i - 1][j - 1] < self.h else 0)
+                )
 
-                    # If the current square does not have valid number of trees, we exempt it and find the smallest maximal square plot alongside the boundary of current plot and store it.
-                    elif x - 1 >= 0:
-                        self.dp[i % 2][j][x] = 1 + min(self.dp[(i - 1) % 2][j][x - 1], self.dp[(
-                            i - 1) % 2][j - 1][x - 1], self.dp[i % 2][j - 1][x - 1], )
+    def getTopLeft(self, rowEnd, colEnd, dist):
+        return rowEnd - dist + 1, colEnd - dist + 1
 
-                    # We dont have any optimal square plots that end at current plot which satisfy the requirement. Hence, we clear it.
-                    else:
-                        self.dp[i % 2][j][x] = 0
+    def getInvalidCount(self, rowStart, colStart, rowEnd, colEnd):
+        invalidCount = self.invalidCountArr[rowEnd][colEnd]
+        if rowStart - 1 >= 0:
+            invalidCount -= self.invalidCountArr[rowStart - 1][colEnd]
 
-                    # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement without crossing the exempted limit and store it if required.
-                    if self.dp[i % 2][j][x] > self.maxSquareLen:
-                        self.maxSquareLen = self.dp[i % 2][j][x]
-                        self.resultIndicesArr[0] = i - self.dp[i % 2][j][x] + 1
-                        self.resultIndicesArr[1] = j - self.dp[i % 2][j][x] + 1
-                        self.resultIndicesArr[2] = i
-                        self.resultIndicesArr[3] = j
+        if colStart - 1 >= 0:
+            invalidCount -= self.invalidCountArr[rowEnd][colStart - 1]
+
+        if rowStart - 1 >= 0 and colStart - 1 >= 0:
+            invalidCount += self.invalidCountArr[rowStart - 1][colStart - 1]
+
+        return invalidCount
+
+    def main(self):
+        for k in range(self.k + 1):
+            for rowEnd in range(1, self.m + 1):
+                for colEnd in range(1, self.n + 1):
+                    dist = max(
+                        min(
+                            self.dp[rowEnd][colEnd - 1],
+                            self.dp[rowEnd - 1][colEnd],
+                            self.dp[rowEnd - 1][colEnd - 1],
+                        ),
+                        self.dp[rowEnd][colEnd],
+                    )
+                    rowStart, colStart = self.getTopLeft(rowEnd, colEnd, dist + 1)
+
+                    if rowStart > 0 and colStart > 0:
+                        invalidCount = self.getInvalidCount(
+                            rowStart, colStart, rowEnd, colEnd
+                        )
+
+                        if invalidCount <= min(k, self.k):
+                            self.dp[rowEnd][colEnd] += 1
+                            totRows = rowEnd - rowStart + 1
+                            totCols = colEnd - colStart + 1
+
+                            if totRows == totCols and totRows > self.maxSquareLen:
+                                self.resultIndicesArr[0] = rowStart
+                                self.resultIndicesArr[1] = colStart
+                                self.resultIndicesArr[2] = rowEnd
+                                self.resultIndicesArr[3] = colEnd
+                                self.maxSquareLen = totRows
 
         return self.resultIndicesArr
 
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-TIME COMPLEXITY  : O(m*n*k)
-SPACE COMPLEXITY : O(n*k)
+TIME COMPLEXITY  : O(n*n*m)
+SPACE COMPLEXITY : O(m*n)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 """
