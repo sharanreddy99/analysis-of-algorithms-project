@@ -8,8 +8,8 @@ for ((x = 1; x <= $noOfTests; x++)); do
     m=8
     n=8
     h=5
-    maxDiff=3
-    testCases=1000
+    maxDiff=2
+    testCases=10000
     task=1
     outputRespFolder="./plots/Plot$x/"
 
