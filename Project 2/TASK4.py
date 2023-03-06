@@ -72,7 +72,7 @@ class Main:
 
     def main(self):
         for rowStart in range(1, self.m + 1):
-            for colStart in range(1, self.m + 1):
+            for colStart in range(1, self.n + 1):
                 for inc in range(min(self.m - rowStart + 1, self.n - colStart + 1)):
                     rowEnd, colEnd = rowStart + inc, colStart + inc
                     validPlotsCount = self.getValidCount(
