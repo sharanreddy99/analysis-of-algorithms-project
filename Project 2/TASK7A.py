@@ -24,48 +24,87 @@ class Main:
         self.initDPArray()
 
     def initDPArray(self):
-        # We create a three dimensional array with m,n,k as each dimension respectively.
         self.dp = [
-            [[-1 for x in range(self.k + 1)] for j in range(self.n + 1)]
-            for i in range(self.m + 1)
+            [[-1 for x in range(self.n + 1)] for y in range(self.m + 1)]
+            for k in range(self.k + 1)
         ]
 
-    def compute(self, i, j, k):
-        global maxSquareLen, resultIndicesArr
+        # for k in range(self.k + 1):
+        #     for j in range(self.n + 1):
+        #         self.dp[k][0][j] = 0
 
-        if k < 0:
-            return -1
+        # for k in range(self.k + 1):
+        #     for i in range(self.m + 1):
+        #         self.dp[k][i][0] = 0
 
-        if i == 0 or j == 0:
+        self.invalidCountArr = [
+            [0 for i in range(self.n + 1)] for j in range(self.m + 1)
+        ]
+
+        for i in range(1, self.m + 1):
+            for j in range(1, self.n + 1):
+                self.invalidCountArr[i][j] = (
+                    self.invalidCountArr[i][j - 1]
+                    + self.invalidCountArr[i - 1][j]
+                    - self.invalidCountArr[i - 1][j - 1]
+                    + (1 if self.p[i - 1][j - 1] < self.h else 0)
+                )
+
+    def getTopLeft(self, rowEnd, colEnd, dist):
+        return rowEnd - dist + 1, colEnd - dist + 1
+
+    def getInvalidCount(self, rowStart, colStart, rowEnd, colEnd):
+        invalidCount = self.invalidCountArr[rowEnd][colEnd]
+        invalidCount -= self.invalidCountArr[rowStart - 1][colEnd]
+        invalidCount -= self.invalidCountArr[rowEnd][colStart - 1]
+        invalidCount += self.invalidCountArr[rowStart - 1][colStart - 1]
+        return invalidCount
+
+    def computeValidSquare(self, rowEnd, colEnd, dist, k):
+        rowStart, colStart = self.getTopLeft(rowEnd, colEnd, dist)
+        if rowStart > 0 and colStart > 0:
+            invalidCount = self.getInvalidCount(rowStart, colStart, rowEnd, colEnd)
+            if invalidCount <= k:
+                self.dp[k][rowEnd][colEnd] = max(self.dp[k][rowEnd][colEnd], dist)
+                totRows = rowEnd - rowStart + 1
+                totCols = colEnd - colStart + 1
+
+                if totRows == totCols and totRows > self.maxSquareLen:
+                    self.resultIndicesArr[0] = rowStart
+                    self.resultIndicesArr[1] = colStart
+                    self.resultIndicesArr[2] = rowEnd
+                    self.resultIndicesArr[3] = colEnd
+                    self.maxSquareLen = totRows
+
+    def compute(self, rowEnd, colEnd, k):
+        if rowEnd == 0 or colEnd == 0:
+            self.dp[k][rowEnd][colEnd] = 0
             return 0
 
-        if self.dp[i][j][k] != -1:
-            return self.dp[i][j][k]
+        if self.dp[k][rowEnd][colEnd] != -1:
+            return self.dp[k][rowEnd][colEnd]
 
-        leftK = self.compute(i, j - 1, k)
-        topK = self.compute(i - 1, j, k)
-        diagK = self.compute(i - 1, j - 1, k)
-        leftK1 = self.compute(i, j - 1, k - 1)
-        topK1 = self.compute(i - 1, j, k - 1)
-        diagK1 = self.compute(i - 1, j - 1, k - 1)
+        dist1 = self.compute(rowEnd - 1, colEnd - 1, k)
+        self.computeValidSquare(rowEnd, colEnd, dist1 + 1, k)
 
-        if self.p[i - 1][j - 1] >= self.h:
-            self.dp[i][j][k] = 1 + min(leftK, topK, diagK)
-            print("valid", i, j, k, self.dp[i][j][k])
-        else:
-            self.dp[i][j][k] = 1 + min(leftK1, topK1, diagK1)
-            print("not valid", i, j, k, self.dp[i][j][k])
+        dist2 = self.compute(rowEnd - 1, colEnd, k)
+        self.computeValidSquare(rowEnd, colEnd, dist2 + 1, k)
 
-        # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement without crossing the exempted limit and store it if required.
-        if self.dp[i][j][k] > self.maxSquareLen:
-            print("res", i, j, k, self.dp[i][j][k])
-            self.resultIndicesArr[0] = i - self.dp[i][j][k] + 1
-            self.resultIndicesArr[1] = j - self.dp[i][j][k] + 1
-            self.resultIndicesArr[2] = i
-            self.resultIndicesArr[3] = j
-            self.maxSquareLen = self.dp[i][j][k]
+        dist3 = self.compute(rowEnd, colEnd - 1, k)
+        self.computeValidSquare(rowEnd, colEnd, dist3 + 1, k)
 
-        return self.dp[i][j][k]
+        if k - 1 >= 0:
+            dist4 = self.compute(rowEnd - 1, colEnd - 1, k - 1)
+            dist5 = self.compute(rowEnd, colEnd, k - 1)
+            dist6 = self.compute(rowEnd - 1, colEnd, k - 1)
+            dist7 = self.compute(rowEnd, colEnd - 1, k - 1)
+
+            self.computeValidSquare(rowEnd, colEnd, dist4 + 1, k)
+            self.computeValidSquare(rowEnd, colEnd, dist5 + 1, k)
+            self.computeValidSquare(rowEnd, colEnd, dist6 + 1, k)
+            self.computeValidSquare(rowEnd, colEnd, dist7 + 1, k)
+
+        return self.dp[k][rowEnd][colEnd]
 
     def main(self):
         self.compute(self.m, self.n, self.k)
@@ -74,8 +113,8 @@ class Main:
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-TIME COMPLEXITY  : O(m*n*k)
-SPACE COMPLEXITY : O(m*n*k)
+TIME COMPLEXITY  : O(k*m*n)
+SPACE COMPLEXITY : O(k*m*n)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 """
