@@ -44,15 +44,9 @@ class Main:
 
     def getInvalidCount(self, rowStart, colStart, rowEnd, colEnd):
         invalidCount = self.invalidCountArr[rowEnd][colEnd]
-        if rowStart - 1 >= 0:
-            invalidCount -= self.invalidCountArr[rowStart - 1][colEnd]
-
-        if colStart - 1 >= 0:
-            invalidCount -= self.invalidCountArr[rowEnd][colStart - 1]
-
-        if rowStart - 1 >= 0 and colStart - 1 >= 0:
-            invalidCount += self.invalidCountArr[rowStart - 1][colStart - 1]
-
+        invalidCount -= self.invalidCountArr[rowStart - 1][colEnd]
+        invalidCount -= self.invalidCountArr[rowEnd][colStart - 1]
+        invalidCount += self.invalidCountArr[rowStart - 1][colStart - 1]
         return invalidCount
 
     def computeValidSquare(self, rowEnd, colEnd, dist, k):
