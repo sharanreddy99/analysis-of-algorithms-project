@@ -71,13 +71,12 @@ class Main:
                 for colEnd in range(1, self.n + 1):
                     dist1 = self.dp[rowEnd - 1][colEnd - 1]
                     dist2 = self.dp[rowEnd][colEnd]
-                    dist3 = (
-                        min(self.dp[rowEnd][colEnd - 1], self.dp[rowEnd - 1][colEnd])
-                        + 1
+                    dist3 = min(
+                        self.dp[rowEnd][colEnd - 1], self.dp[rowEnd - 1][colEnd]
                     )
                     self.computeValidSquare(rowEnd, colEnd, dist1 + 1, k)
                     self.computeValidSquare(rowEnd, colEnd, dist2 + 1, k)
-                    self.computeValidSquare(rowEnd, colEnd, dist3, k)
+                    self.computeValidSquare(rowEnd, colEnd, dist3 + 1, k)
 
         return self.resultIndicesArr
 
