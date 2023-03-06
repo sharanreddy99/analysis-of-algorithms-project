@@ -75,6 +75,8 @@ class Main:
                     self.resultIndicesArr[2] = rowEnd
                     self.resultIndicesArr[3] = colEnd
                     self.maxSquareLen = totRows
+            else:
+                self.dp[k][rowEnd][colEnd] = max(self.dp[k][rowEnd][colEnd], 0)
 
     def compute(self, rowEnd, colEnd, k):
         if rowEnd == 0 or colEnd == 0:
