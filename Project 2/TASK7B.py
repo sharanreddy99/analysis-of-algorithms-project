@@ -1,3 +1,5 @@
+# Given a matrix p of m ×n integers (non-negative) representing the minimum number of trees that must be planted on each plot and an integer h (positive), find the bounding indices of a square area where where only up to k enclosed plots can have a minimum tree requirement of less than h
+# Design a Θ(m * n * k) time Dynamic Programming algorithm for solving Problem3 using Tabulation (Bottom Up)
 class Main:
     def __init__(self, m, n, h, k, p):
         # No of rows

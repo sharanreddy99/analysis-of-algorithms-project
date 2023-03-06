@@ -1,3 +1,5 @@
+# Given a matrix p of m ×n integers (non-negative) representing the minimum number of trees that must be planted on each plot and an integer h (positive), find the bounding indices of a square area where all but the corner plots enclosed requires a minimum of h trees to be planted. The corner plots can have any number of trees required
+# Design a Θ(m * n^2) time Dynamic Programming algorithm for solving Problem2
 class Main:
     def __init__(self, m, n, h, p):
         # No of rows

@@ -1,72 +1,130 @@
-# Algorithm that finds the max houses to be painted based on the first available house
-from typing import List
+# Given a matrix p of m ×n integers (non-negative) representing the minimum number of trees that must be planted on each plot and an integer h (positive), find the bounding indices of a square area where all but the corner plots enclosed requires a minimum of h trees to be planted. The corner plots can have any number of trees required
+# Design a Θ(m * n) time Dynamic Programming algorithm for solving Problem2 using Tabulation (Bottom Up)
+class Main:
+    def __init__(self, m, n, h, p):
+        # No of rows
+        self.m = m
 
+        # No of cols
+        self.n = n
 
-def main(m: int, n: int, h: int, p: List[int]) -> List[int]:
-    # A pointer to the current house to be painted.
-    daysIdx: int = 0
+        # Min number of trees
+        self.h = h
 
-    # An array which stores the indices of houses painted.
-    resultIndicesArr: List[int] = []
+        # Trees planted on each plot
+        self.p = p
 
-    for startDay in range(1, n + 1):
-        # we exit the loop as all the intervals have been processed and we are left with no more houses to paint.
-        if daysIdx == m:
-            break
+        # Array which stores the top left and bottom right indices sequentially
+        self.resultIndicesArr = [-1, -1, -1, -1]
 
-        while daysIdx < len(days) and days[daysIdx][1] < startDay:
-            daysIdx += 1
+        # Size of the maximal square plot
+        self.maxSquareLen = 0
 
-        # If the current days lies between the start and end days of the house, we paint it.
-        if (
-            daysIdx < len(days)
-            and startDay >= days[daysIdx][0]
-            and startDay <= days[daysIdx][1]
-        ):
-            resultIndicesArr.append(daysIdx + 1)
-            daysIdx += 1
+        # list of possible moves with respect to current plot to check for previously computed maximal square region lengths.
+        self.moves = [
+            # top left
+            [-1, -1],
+            # left
+            [0, -1],
+            # top
+            [-1, 0],
+        ]
 
-    return resultIndicesArr
+        self.initDPArray()
+
+    def initDPArray(self):
+        # DP[i,j] indicates the largest possible square length having bottom right corner as i,j with corner exemptions.
+        self.dp = [[0 for x in range(self.n + 1)] for y in range(self.m + 1)]
+
+        # validCountArr stores the no of plots satisfying the min tree requirement in the given region bounded by top left (0, 0)
+        # and bottom right (i, j)
+        self.validCountArr = [[0 for i in range(self.n + 1)] for j in range(self.m + 1)]
+
+        # We compute the validCount bounded by [0,0] and [i,j] based on the previously computed values.
+        for i in range(1, self.m + 1):
+            for j in range(1, self.n + 1):
+                self.validCountArr[i][j] = (
+                    self.validCountArr[i][j - 1]
+                    + self.validCountArr[i - 1][j]
+                    - self.validCountArr[i - 1][j - 1]
+                    + (1 if self.p[i - 1][j - 1] >= self.h else 0)
+                )
+
+    # getTopLeft returns the top left corner for a given bottom right position based on the distance provided.
+    def getTopLeft(self, rowEnd, colEnd, dist):
+        return rowEnd - dist + 1, colEnd - dist + 1
+
+    # getValidCount returns the the no of valid plots in the region bounded by topleft corner [rowStart, colStart] and
+    # bottom right corner [rowEnd, colEnd]
+    def getValidCount(self, rowStart, colStart, rowEnd, colEnd):
+        validCount = self.validCountArr[rowEnd][colEnd]
+        validCount -= self.validCountArr[rowStart - 1][colEnd]
+        validCount -= self.validCountArr[rowEnd][colStart - 1]
+        validCount += self.validCountArr[rowStart - 1][colStart - 1]
+        return validCount
+
+    def getExemptedCellsCount(self, rowStart, colStart, rowEnd, colEnd):
+        count = 0
+        if self.p[rowStart - 1][colStart - 1] < self.h:
+            count += 1
+
+        if self.p[rowStart - 1][colEnd - 1] < self.h:
+            count += 1
+
+        if self.p[rowEnd - 1][colStart - 1] < self.h:
+            count += 1
+
+        if self.p[rowEnd - 1][colEnd - 1] < self.h:
+            count += 1
+
+        return count
+
+    # validateAndStoreRegion checks if the given region satisfies the min trees requirement and updates the result if we get a maximal square region.
+    def validateAndStoreRegion(self, rowEnd, colEnd, dist, k):
+        rowStart, colStart = self.getTopLeft(rowEnd, colEnd, dist)
+        # if the newly found top left corner is a valid position, process the region.
+        if rowStart > 0 and colStart > 0 and rowStart <= rowEnd and colStart <= colEnd:
+            validCount = self.getValidCount(rowStart, colStart, rowEnd, colEnd)
+            exemptedCount = self.getExemptedCellsCount(
+                rowStart, colStart, rowEnd, colEnd
+            )
+
+            totRows = rowEnd - rowStart + 1
+            totCols = colEnd - colStart + 1
+
+            if validCount + exemptedCount == totRows * totCols:
+                self.dp[rowEnd][colEnd] = max(self.dp[rowEnd][colEnd], dist)
+
+                # if the area enclosed by the boundaries forms a square region and is optimal than the previous result, store it.
+                if totRows == totCols and totRows > self.maxSquareLen:
+                    self.resultIndicesArr[0] = rowStart
+                    self.resultIndicesArr[1] = colStart
+                    self.resultIndicesArr[2] = rowEnd
+                    self.resultIndicesArr[3] = colEnd
+                    self.maxSquareLen = totRows
+
+    def main(self):
+        for rowEnd in range(1, self.m + 1):
+            for colEnd in range(1, self.n + 1):
+                for x, y in self.moves:
+                    # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
+                    length = self.dp[rowEnd + x][colEnd + y]
+
+                    # Store the length of the optimal square region ending at current cell based on the previously obtained length and atmost k excemptions.
+                    for inc in range(-1, 2, 1):
+                        self.validateAndStoreRegion(
+                            rowEnd, colEnd, length + inc, self.k
+                        )
+
+            # print("TASK7B k - {0} => {1}".format(k, self.dp))
+
+        return self.resultIndicesArr
 
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-TIME COMPLEXITY  : O(n) when m <= n and O(n+m) when m > n
-SPACE COMPLEXITY : O(m)
+TIME COMPLEXITY  : O(m*n)
+SPACE COMPLEXITY : O(m*n)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-
-=> Instance where this algorithm yield an optimal answer?
-=> When the startDays are unique, this algorithm gives an optimal solution
-=> n = 6; m = 4; days = [(1,2), (2,3), (3,4), (4,5)]
-
-=> According to current algorithm:
-1) House at index 1 is painted on day 1 => 1 lies between (1, 2)
-2) House at index 2 is painted on day 2 => 2 lies between (2, 3)
-3) House at index 3 is painted on day 3 => 3 lies between (3, 4)
-4) House at index 4 is painted on day 4 => 4 lies between (4, 5)
-Total number of houses painted = 4 (1, 2, 3, 4)
-
-Optimal Solution:
-=> The above solution is the optimal one as it paints all the houses available
-
------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-=> Instance where this algorithm doesn't yield an optimal answer?
-=> When the initial houses have longer intervals compared to the subsequent houses, this algorithm gives a non-optimal solution
-=> n = 5; m = 4; days = [(1,4), (1,4), (1,4), (2,3)]
-
-=> According to current algorithm:
-1) House at index 1 is painted on day 1         => 1 lies between (1, 4)
-2) House at index 2 is painted on day 2         => 2 lies between (1, 4)
-3) House at index 3 is painted on day 3         => 3 lies between (1, 4)
-4) House at index 4 cannot be painted on day 4  => 4 doesn't lie between (2,3)
-=> Total number of houses painted = 3 (1, 2, 3)
-
-Optimal Solution:
-1) House at index 1 is painted on day 1 => 1 lies between (1, 4)
-2) House at index 2 is painted on day 2 => 2 lies between (1, 4)
-3) House at index 4 is painted on day 3 => 3 lies between (2, 3)
-4) House at index 3 is painted on day 4 => 4 lies between (1, 4)
-=> Total number of house painted = 4 (1, 2, 4, 3)
 """
