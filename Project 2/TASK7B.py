@@ -55,36 +55,35 @@ class Main:
 
         return invalidCount
 
+    def computeValidSquare(self, rowEnd, colEnd, dist, k):
+        rowStart, colStart = self.getTopLeft(rowEnd, colEnd, dist)
+        if rowStart > 0 and colStart > 0:
+            invalidCount = self.getInvalidCount(rowStart, colStart, rowEnd, colEnd)
+            if invalidCount <= k:
+                self.dp[rowEnd][colEnd] = max(self.dp[rowEnd][colEnd], dist)
+                totRows = rowEnd - rowStart + 1
+                totCols = colEnd - colStart + 1
+
+                if totRows == totCols and totRows > self.maxSquareLen:
+                    self.resultIndicesArr[0] = rowStart
+                    self.resultIndicesArr[1] = colStart
+                    self.resultIndicesArr[2] = rowEnd
+                    self.resultIndicesArr[3] = colEnd
+                    self.maxSquareLen = totRows
+
     def main(self):
         for k in range(self.k + 1):
             for rowEnd in range(1, self.m + 1):
                 for colEnd in range(1, self.n + 1):
-                    dist = max(
-                        min(
-                            self.dp[rowEnd][colEnd - 1],
-                            self.dp[rowEnd - 1][colEnd],
-                            self.dp[rowEnd - 1][colEnd - 1],
-                        ),
-                        self.dp[rowEnd][colEnd],
+                    dist1 = self.dp[rowEnd - 1][colEnd - 1]
+                    dist2 = self.dp[rowEnd][colEnd]
+                    dist3 = (
+                        min(self.dp[rowEnd][colEnd - 1], self.dp[rowEnd - 1][colEnd])
+                        + 1
                     )
-                    rowStart, colStart = self.getTopLeft(rowEnd, colEnd, dist + 1)
-
-                    if rowStart > 0 and colStart > 0:
-                        invalidCount = self.getInvalidCount(
-                            rowStart, colStart, rowEnd, colEnd
-                        )
-
-                        if invalidCount <= min(k, self.k):
-                            self.dp[rowEnd][colEnd] += 1
-                            totRows = rowEnd - rowStart + 1
-                            totCols = colEnd - colStart + 1
-
-                            if totRows == totCols and totRows > self.maxSquareLen:
-                                self.resultIndicesArr[0] = rowStart
-                                self.resultIndicesArr[1] = colStart
-                                self.resultIndicesArr[2] = rowEnd
-                                self.resultIndicesArr[3] = colEnd
-                                self.maxSquareLen = totRows
+                    self.computeValidSquare(rowEnd, colEnd, dist1 + 1, k)
+                    self.computeValidSquare(rowEnd, colEnd, dist2 + 1, k)
+                    self.computeValidSquare(rowEnd, colEnd, dist3, k)
 
         return self.resultIndicesArr
 
