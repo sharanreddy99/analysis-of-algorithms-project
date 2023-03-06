@@ -23,30 +23,19 @@ class Main:
 
         # list of possible moves with respect to current plot to check for previously computed maximal square region lengths.
         self.moves = [
-            # top left with atmost k exemptions
-            [-1, -1, 0],
-            # top with atmost k exemptions
-            [-1, 0, 0],
-            # left with atmost k exemptions
-            [0, -1, 0],
-            # top left with atmost k - 1 exemptions
-            [-1, -1, -1],
-            # top with atmost k - 1 exemptions
-            [-1, 0, -1],
-            # left with atmost k - 1 exemptions
-            [0, -1, -1],
-            # current  with atmost k - 1 exemptions
-            [0, 0, -1],
+            # top left
+            [-1, -1],
+            # left
+            [0, -1],
+            # top
+            [-1, 0],
         ]
 
         self.initDPArray()
 
     def initDPArray(self):
-        # intiialize the memorization table with m,n in the x and y dimensions respectively.
-        self.dp = [
-            [[-1 for x in range(self.n + 1)] for y in range(self.m + 1)]
-            for k in range(self.k + 1)
-        ]
+        # DP[i,j] indicates the largest possible square length having bottom right corner as i,j with atmost k exemptions.
+        self.dp = [[-1 for x in range(self.n + 1)] for y in range(self.m + 1)]
 
         # invalidCountArr stores the no of plots with minTrees less than the minimum requirement in a given region bounded by top left (0, 0)
         # and bottom right (i, j)
@@ -81,10 +70,10 @@ class Main:
     def validateAndStoreRegion(self, rowEnd, colEnd, dist, k):
         rowStart, colStart = self.getTopLeft(rowEnd, colEnd, dist)
         # if the newly found top left corner is a valid position, process the region.
-        if rowStart > 0 and colStart > 0:
+        if rowStart > 0 and colStart > 0 and rowStart <= rowEnd and colStart <= colEnd:
             invalidCount = self.getInvalidCount(rowStart, colStart, rowEnd, colEnd)
             if invalidCount <= k:
-                self.dp[k][rowEnd][colEnd] = max(self.dp[k][rowEnd][colEnd], dist)
+                self.dp[rowEnd][colEnd] = max(self.dp[rowEnd][colEnd], dist)
                 totRows = rowEnd - rowStart + 1
                 totCols = colEnd - colStart + 1
 
@@ -97,36 +86,39 @@ class Main:
                     self.maxSquareLen = totRows
             else:
                 # We ensure that we have processed the current cell by setting it to 0 which by default is -1.
-                self.dp[k][rowEnd][colEnd] = max(self.dp[k][rowEnd][colEnd], 0)
+                self.dp[rowEnd][colEnd] = max(self.dp[rowEnd][colEnd], 0)
 
     def compute(self, rowEnd, colEnd, k):
         if rowEnd == 0 or colEnd == 0:
-            self.dp[k][rowEnd][colEnd] = 0
+            self.dp[rowEnd][colEnd] = 0
             return 0
 
         # If we come across a subproblem which was solved earlier, we return the result directly.
-        if self.dp[k][rowEnd][colEnd] != -1:
-            return self.dp[k][rowEnd][colEnd]
+        if self.dp[rowEnd][colEnd] != -1:
+            return self.dp[rowEnd][colEnd]
 
-        for x, y, z in self.moves:
-            if k + z >= 0:
-                # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
-                length = self.compute(rowEnd + x, colEnd + y, k + z)
+        for x, y in self.moves:
+            # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
+            length = self.compute(rowEnd + x, colEnd + y, k)
 
-                # Store the length of the optimal square region ending at current cell based on the previously obtained length and atmost k excemptions.
-                self.validateAndStoreRegion(rowEnd, colEnd, length + 1, k)
+            # Store the length of the optimal square region ending at current cell based on the previously obtained length and atmost k excemptions.
+            for inc in range(-1, 2, 1):
+                self.validateAndStoreRegion(rowEnd, colEnd, length + inc, k)
 
-        return self.dp[k][rowEnd][colEnd]
+        return self.dp[rowEnd][colEnd]
 
     def main(self):
         self.compute(self.m, self.n, self.k)
+        # for i in range(self.k + 1):
+        #     print("TASK7A k - {0} => {1}".format(i, self.dp[i]))
+        # print()
         return self.resultIndicesArr
 
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-TIME COMPLEXITY  : O(k*m*n)
-SPACE COMPLEXITY : O(k*m*n)
+TIME COMPLEXITY  : O(m*n)
+SPACE COMPLEXITY : O(m*n)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 """

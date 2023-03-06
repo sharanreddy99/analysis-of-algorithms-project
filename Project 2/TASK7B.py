@@ -21,10 +21,20 @@ class Main:
         # Size of the maximal square plot
         self.maxSquareLen = 0
 
+        # list of possible moves with respect to current plot to check for previously computed maximal square region lengths.
+        self.moves = [
+            # top left
+            [-1, -1],
+            # left
+            [0, -1],
+            # top
+            [-1, 0],
+        ]
+
         self.initDPArray()
 
     def initDPArray(self):
-        # intiialize the memorization table with m,n in the x and y dimensions respectively.
+        # DP[i,j] indicates the largest possible square length having bottom right corner as i,j with atmost k exemptions.
         self.dp = [[0 for x in range(self.n + 1)] for y in range(self.m + 1)]
 
         # invalidCountArr stores the no of plots with minTrees less than the minimum requirement in a given region bounded by top left (0, 0)
@@ -60,7 +70,7 @@ class Main:
     def validateAndStoreRegion(self, rowEnd, colEnd, dist, k):
         rowStart, colStart = self.getTopLeft(rowEnd, colEnd, dist)
         # if the newly found top left corner is a valid position, process the region.
-        if rowStart > 0 and colStart > 0:
+        if rowStart > 0 and colStart > 0 and rowStart <= rowEnd and colStart <= colEnd:
             invalidCount = self.getInvalidCount(rowStart, colStart, rowEnd, colEnd)
             if invalidCount <= k:
                 self.dp[rowEnd][colEnd] = max(self.dp[rowEnd][colEnd], dist)
@@ -76,33 +86,26 @@ class Main:
                     self.maxSquareLen = totRows
 
     def main(self):
-        moves = [
-            # top left
-            [-1, -1],
-            # current
-            [0, 0],
-            # left
-            [0, -1],
-            # top
-            [-1, 0],
-        ]
+        for rowEnd in range(1, self.m + 1):
+            for colEnd in range(1, self.n + 1):
+                for x, y in self.moves:
+                    # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
+                    length = self.dp[rowEnd + x][colEnd + y]
 
-        for k in range(self.k + 1):
-            for rowEnd in range(1, self.m + 1):
-                for colEnd in range(1, self.n + 1):
-                    for x, y in moves:
-                        # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
-                        length = self.dp[rowEnd + x][colEnd + y]
+                    # Store the length of the optimal square region ending at current cell based on the previously obtained length and atmost k excemptions.
+                    for inc in range(-1, 2, 1):
+                        self.validateAndStoreRegion(
+                            rowEnd, colEnd, length + inc, self.k
+                        )
 
-                        # Store the length of the optimal square region ending at current cell based on the previously obtained length and atmost k excemptions.
-                        self.validateAndStoreRegion(rowEnd, colEnd, length + 1, k)
+            # print("TASK7B k - {0} => {1}".format(k, self.dp))
 
         return self.resultIndicesArr
 
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-TIME COMPLEXITY  : O(k*m*n)
+TIME COMPLEXITY  : O(m*n)
 SPACE COMPLEXITY : O(m*n)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
