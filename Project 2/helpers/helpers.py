@@ -24,8 +24,7 @@ def prepareFunctionCall(task=None):
         task = sys.argv[1]
 
     if "6" in task or "7" in task:
-        funcCall = "TASK{0}.Main(m, n, h, k, p).main()".format(
-            task.lstrip("run"))
+        funcCall = "TASK{0}.Main(m, n, h, k, p).main()".format(task.lstrip("run"))
     else:
         funcCall = "TASK{0}.Main(m, n, h, p).main()".format(task.lstrip("run"))
 
@@ -37,8 +36,7 @@ def compareOptimalTasksWithMultipleInput():
         args = sys.argv
         for i in range(int(args[6])):
             m, n, h, k, p = generateDummyInput(
-                int(args[3]), int(args[4]), int(
-                    args[5]), int(args[7]), int(args[8])
+                int(args[3]), int(args[4]), int(args[5]), int(args[7]), int(args[8])
             )
             fp.write(
                 "Input: m ({0}), n: ({1}), h: ({2}), k: ({3}), p: {4}\n".format(
@@ -62,11 +60,15 @@ def compareOptimalTasksWithMultipleInput():
                 for j in range(i + 1, len(tasks)):
                     fp.write(
                         "task{0} == task{1} => {2}\n".format(
-                            tasks[i], tasks[j], areResultsEqual(
-                                resArr[i], resArr[j])
+                            tasks[i], tasks[j], areResultsEqual(resArr[i], resArr[j])
                         )
                     )
-
+                    if areResultsEqual(resArr[i], resArr[j]) == "False":
+                        print(
+                            "m: ({0}), n: ({1}), h: ({2}), k: ({3}) p:{4}, taska: ({5}), taskb: ({6}), res1: ({7}), res2: ({8})".format(
+                                m, n, h, k, p, tasks[i], tasks[j], resArr[i], resArr[j]
+                            )
+                        )
             fp.write("\n\n")
 
 
@@ -76,16 +78,25 @@ def compareOptimalTasksWithSingleInput():
         m, n, h, k, p = readDummyInput()
         if len(args) == 8:
             m, n, h, k, p = generateDummyInput(
-                int(args[4]), int(args[5]), int(
-                    args[6]), int(args[7]), int(args[8])
+                int(args[4]), int(args[5]), int(args[6]), int(args[7]), int(args[8])
             )
         fp.write(
             "Comparision between task-{0} and task-{1}\n_____________________________\n".format(
                 int(args[2]), int(args[3])
             )
         )
-        fp.write(str(m) + " , " + str(n) + ", " +
-                 str(h) + ", " + str(k) + "," + json.dumps(p) + "\n")
+        fp.write(
+            str(m)
+            + " , "
+            + str(n)
+            + ", "
+            + str(h)
+            + ", "
+            + str(k)
+            + ","
+            + json.dumps(p)
+            + "\n"
+        )
         startTimer()
         res1 = eval(prepareFunctionCall(args[2]))
         returnExecutionTime()
@@ -110,10 +121,15 @@ def compareOptimalTasksWithSingleInput():
 
 
 def areResultsEqual(res1, res2):
-    maxLen1 = (res1[2] - res1[0]) * (res1[3] - res1[0])
-    maxLen2 = (res2[2] - res2[0]) * (res2[3] - res2[0])
+    maxLen1 = (res1[2] - res1[0] + 1) * (res1[3] - res1[1] + 1)
+    maxLen2 = (res2[2] - res2[0] + 1) * (res2[3] - res2[1] + 1)
 
-    return "True" if maxLen1 == maxLen2 else "False"
+    return "True" if (maxLen1 == maxLen2) else "False"
+    # return (
+    #     "True"
+    #     if (maxLen1 == maxLen2 and all([res1[i] == res2[i] for i in range(4)]))
+    #     else "False"
+    # )
 
 
 def generateRandomInputFile():
@@ -124,14 +140,14 @@ def generateRandomInputFile():
     task = int(sys.argv[6])
     maxDiff = int(sys.argv[7])
     writeFile = (
-        "testcases_" +
-        "".join(random.choices(string.ascii_lowercase, k=8)) + ".txt"
+        "testcases_" + "".join(random.choices(string.ascii_lowercase, k=8)) + ".txt"
     )
 
     with open("./input/" + writeFile, "w") as fp:
         for i in range(testCases):
             new_m, new_n, new_h, new_k, new_p = generateDummyInput(
-                m, n, h, task, maxDiff)
+                m, n, h, task, maxDiff
+            )
             fp.write(json.dumps(new_m) + "\n")
             fp.write(json.dumps(new_n) + "\n")
             fp.write(json.dumps(new_h) + " " + json.dumps(new_k) + "\n")
