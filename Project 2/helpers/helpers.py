@@ -60,10 +60,12 @@ def compareOptimalTasksWithMultipleInput():
                 for j in range(i + 1, len(tasks)):
                     fp.write(
                         "task{0} == task{1} => {2}\n".format(
-                            tasks[i], tasks[j], areResultsEqual(resArr[i], resArr[j])
+                            tasks[i],
+                            tasks[j],
+                            areResultsEqual(resArr[i], resArr[j], h, k, p),
                         )
                     )
-                    if areResultsEqual(resArr[i], resArr[j]) == "False":
+                    if areResultsEqual(resArr[i], resArr[j], h, k, p) == "False":
                         print(
                             "m: ({0}), n: ({1}), h: ({2}), k: ({3}) p:{4}, taska: ({5}), taskb: ({6}), res1: ({7}), res2: ({8})".format(
                                 m, n, h, k, p, tasks[i], tasks[j], resArr[i], resArr[j]
@@ -116,20 +118,37 @@ def compareOptimalTasksWithSingleInput():
             )
             + "\n"
         )
-        fp.write(areResultsEqual(res1, res2))
+        fp.write(areResultsEqual(res1, res2, h, k, p))
         fp.write("\n\n")
 
 
-def areResultsEqual(res1, res2):
+def areResultsEqual(res1, res2, h, k, p):
     maxLen1 = (res1[2] - res1[0] + 1) * (res1[3] - res1[1] + 1)
     maxLen2 = (res2[2] - res2[0] + 1) * (res2[3] - res2[1] + 1)
+    invalidCount1 = 0
+    invalidCount2 = 0
 
-    return "True" if (maxLen1 == maxLen2) else "False"
-    # return (
-    #     "True"
-    #     if (maxLen1 == maxLen2 and all([res1[i] == res2[i] for i in range(4)]))
-    #     else "False"
-    # )
+    for i in range(res1[0], res1[2] + 1):
+        for j in range(res1[1], res1[3] + 1):
+            if p[i - 1][j - 1] < h:
+                invalidCount1 += 1
+
+    for i in range(res2[0], res2[2] + 1):
+        for j in range(res2[1], res2[3] + 1):
+            if p[i - 1][j - 1] < h:
+                invalidCount2 += 1
+
+    return (
+        "True"
+        if (
+            maxLen1 == maxLen2
+            and (
+                (invalidCount1 <= k and invalidCount2 <= k)
+                or (res1 == [-1, -1, -1, -1] and res2 == [-1, -1, -1, -1])
+            )
+        )
+        else "False"
+    )
 
 
 def generateRandomInputFile():
