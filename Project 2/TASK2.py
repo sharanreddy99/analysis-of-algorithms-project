@@ -1,3 +1,5 @@
+# Given a matrix p of m ×n integers (non-negative) representing the minimum number of trees that must be planted on each plot and an integer h (positive), find the bounding indices of a square area where each plot enclosed requires a minimum of h trees to be planted
+# Design a Θ(m^2 * n^2) time algorithm for solving Problem1
 class Main:
     def __init__(self, m, n, h, p):
         # No of rows
