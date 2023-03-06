@@ -58,14 +58,20 @@ def compareOptimalTasksWithMultipleInput():
 
             for i in range(len(tasks)):
                 for j in range(i + 1, len(tasks)):
+                    comparision = (
+                        areProblem2ResultsEqual(resArr[i], resArr[j], h, k, p)
+                        if ("4" in args[2] or "5" in args[2])
+                        else areResultsEqual(resArr[i], resArr[j], h, k, p)
+                    )
+
                     fp.write(
                         "task{0} == task{1} => {2}\n".format(
                             tasks[i],
                             tasks[j],
-                            areResultsEqual(resArr[i], resArr[j], h, k, p),
+                            comparision,
                         )
                     )
-                    if areResultsEqual(resArr[i], resArr[j], h, k, p) == "False":
+                    if comparision == "False":
                         print(
                             "m: ({0}), n: ({1}), h: ({2}), k: ({3}) p:{4}, taska: ({5}), taskb: ({6}), res1: ({7}), res2: ({8})".format(
                                 m, n, h, k, p, tasks[i], tasks[j], resArr[i], resArr[j]
@@ -118,7 +124,13 @@ def compareOptimalTasksWithSingleInput():
             )
             + "\n"
         )
-        fp.write(areResultsEqual(res1, res2, h, k, p))
+
+        comparision = (
+            areProblem2ResultsEqual(res1, res2, h, k, p)
+            if ("4" in args[2] or "5" in args[2])
+            else areResultsEqual(res1, res2, h, k, p)
+        )
+        fp.write(comparision)
         fp.write("\n\n")
 
 
@@ -144,6 +156,64 @@ def areResultsEqual(res1, res2, h, k, p):
             maxLen1 == maxLen2
             and (
                 (invalidCount1 <= k and invalidCount2 <= k)
+                or (res1 == [-1, -1, -1, -1] and res2 == [-1, -1, -1, -1])
+            )
+        )
+        else "False"
+    )
+
+
+def getArea(rowStart, colStart, rowEnd, colEnd):
+    return (rowEnd - rowStart + 1) * (colEnd - colStart + 1)
+
+
+def getValidCount(p, h, rowStart, colStart, rowEnd, colEnd):
+    count = 0
+    for i in range(rowStart, rowEnd + 1):
+        for j in range(colStart, colEnd + 1):
+            if p[i - 1][j - 1] >= h:
+                count += 1
+
+    return count
+
+
+# getExemptionCellsCount returns the count of invalid plots from the corners of a given region which can be exempted.
+def getExemptedCellsCount(p, h, rowStart, colStart, rowEnd, colEnd):
+    count = 0
+    if p[rowStart - 1][colStart - 1] < h:
+        count += 1
+
+    if p[rowStart - 1][colEnd - 1] < h:
+        count += 1
+
+    if p[rowEnd - 1][colStart - 1] < h:
+        count += 1
+
+    if p[rowEnd - 1][colEnd - 1] < h:
+        count += 1
+
+    return count
+
+
+def areProblem2ResultsEqual(res1, res2, h, k, p):
+    maxLen1 = getArea(*res1)
+    maxLen2 = getArea(*res2)
+
+    validCount1 = getValidCount(p, h, *res1)
+    validCount2 = getValidCount(p, h, *res2)
+
+    exemptionCount1 = getExemptedCellsCount(p, h, *res1)
+    exemptionCount2 = getExemptedCellsCount(p, h, *res2)
+
+    return (
+        "True"
+        if (
+            maxLen1 == maxLen2
+            and (
+                (
+                    validCount1 + exemptionCount1 >= maxLen1
+                    and validCount2 + exemptionCount2 >= maxLen2
+                )
                 or (res1 == [-1, -1, -1, -1] and res2 == [-1, -1, -1, -1])
             )
         )
