@@ -34,7 +34,7 @@ class Main:
 
     def initDPArray(self):
         # DP[i,j] indicates the largest possible square length having bottom right corner as i,j with corner exemptions.
-        self.dp = [[0 for x in range(self.n + 1)] for y in range(self.m + 1)]
+        self.dp = [[-1 for x in range(self.n + 1)] for y in range(self.m + 1)]
 
         # validCountArr stores the no of plots satisfying the min tree requirement in the given region bounded by top left (0, 0)
         # and bottom right (i, j)
