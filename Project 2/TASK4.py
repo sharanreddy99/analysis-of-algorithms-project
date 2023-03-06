@@ -23,14 +23,35 @@ class Main:
         self.initDPArray()
 
     def initDPArray(self):
-        self.dp = [[0 for i in range(self.n + 1)] for j in range(self.m + 1)]
+        # DP[i,j] indicates the largest possible square length having bottom right corner as i,j with corner exemptions.
+        self.dp = [[0 for x in range(self.n + 1)] for y in range(self.m + 1)]
 
-        # dp[i,j] gives the count of plots which satisfy the min tree requirement for ith row untill jth house.
+        # validCountArr stores the no of plots satisfying the min tree requirement in the given region bounded by top left (0, 0)
+        # and bottom right (i, j)
+        self.validCountArr = [[0 for i in range(self.n + 1)] for j in range(self.m + 1)]
+
+        # We compute the validCount bounded by [0,0] and [i,j] based on the previously computed values.
         for i in range(1, self.m + 1):
             for j in range(1, self.n + 1):
-                self.dp[i][j] = self.dp[i][j - 1] + (
-                    1 if self.p[i - 1][j - 1] >= self.h else 0
+                self.validCountArr[i][j] = (
+                    self.validCountArr[i][j - 1]
+                    + self.validCountArr[i - 1][j]
+                    - self.validCountArr[i - 1][j - 1]
+                    + (1 if self.p[i - 1][j - 1] >= self.h else 0)
                 )
+
+    # getTopLeft returns the top left corner for a given bottom right position based on the distance provided.
+    def getTopLeft(self, rowEnd, colEnd, dist):
+        return rowEnd - dist + 1, colEnd - dist + 1
+
+    # getValidCount returns the the no of valid plots in the region bounded by topleft corner [rowStart, colStart] and
+    # bottom right corner [rowEnd, colEnd]
+    def getValidCount(self, rowStart, colStart, rowEnd, colEnd):
+        validCount = self.validCountArr[rowEnd][colEnd]
+        validCount -= self.validCountArr[rowStart - 1][colEnd]
+        validCount -= self.validCountArr[rowEnd][colStart - 1]
+        validCount += self.validCountArr[rowStart - 1][colStart - 1]
+        return validCount
 
     # getExemptionCellsCount returns the count of invalid plots from the corners of a given region which can be exempted.
     def getExemptedCellsCount(self, rowStart, colStart, rowEnd, colEnd):
@@ -50,25 +71,19 @@ class Main:
         return count
 
     def main(self):
-        for cLeft in range(1, self.n + 1):
-            for cRight in range(cLeft, self.n + 1):
-                validPlotsCount = 0
-                startRow = 1
-                for row in range(1, self.m + 1):
-                    tempCount = self.dp[row][cRight] - self.dp[row][cLeft - 1]
-
-                    validPlotsCount += tempCount
+        for rowStart in range(1, self.m + 1):
+            for colStart in range(1, self.m + 1):
+                for inc in range(min(self.m - rowStart + 1, self.n - colStart + 1)):
+                    rowEnd, colEnd = rowStart + inc, colStart + inc
+                    validPlotsCount = self.getValidCount(
+                        rowStart, colStart, rowEnd, colEnd
+                    )
                     exemptionCount = self.getExemptedCellsCount(
-                        startRow, cLeft, row, cRight
+                        rowStart, colStart, rowEnd, colEnd
                     )
 
-                    totRows = row - startRow + 1
-                    totCols = cRight - cLeft + 1
-
-                    # Update the new start row if we don't have a plot with valid number of trees after exemptions.
-                    if validPlotsCount + exemptionCount < totRows * totCols:
-                        startRow = row
-                        validPlotsCount = tempCount
+                    totRows = rowEnd - rowStart + 1
+                    totCols = colEnd - colStart + 1
 
                     # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if required.
                     if (
@@ -76,11 +91,11 @@ class Main:
                         and (validPlotsCount + exemptionCount) >= totRows * totCols
                         and totRows > self.maxSquareLen
                     ):
-                        self.maxSquareLen = row
-                        self.resultIndicesArr[0] = startRow
-                        self.resultIndicesArr[1] = cLeft
-                        self.resultIndicesArr[2] = row
-                        self.resultIndicesArr[3] = cRight
+                        self.maxSquareLen = totRows
+                        self.resultIndicesArr[0] = rowStart
+                        self.resultIndicesArr[1] = colStart
+                        self.resultIndicesArr[2] = rowEnd
+                        self.resultIndicesArr[3] = colEnd
 
         return self.resultIndicesArr
 
