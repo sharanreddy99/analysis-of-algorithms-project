@@ -76,24 +76,26 @@ class Main:
                     self.maxSquareLen = totRows
 
     def main(self):
+        moves = [
+            # top left
+            [-1, -1],
+            # current
+            [0, 0],
+            # left
+            [0, -1],
+            # top
+            [-1, 0],
+        ]
+
         for k in range(self.k + 1):
             for rowEnd in range(1, self.m + 1):
                 for colEnd in range(1, self.n + 1):
-                    # maximum square area formed by the plot which is immediately to top left of the current plot with k - 1 exemptions.
-                    dist1 = self.dp[rowEnd - 1][colEnd - 1]
+                    for x, y in moves:
+                        # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
+                        length = self.dp[rowEnd + x][colEnd + y]
 
-                    # maximum square area formed by the current plot with k - 1 exemptions.
-                    dist2 = self.dp[rowEnd][colEnd]
-
-                    # maximum square area formed by the plot which is immediately to left or top of the current plot with k - 1 exemptions and has minimum distance.
-                    dist3 = min(
-                        self.dp[rowEnd][colEnd - 1], self.dp[rowEnd - 1][colEnd]
-                    )
-
-                    # store the optimal area formed by each of the distances obtained above.
-                    self.validateAndStoreRegion(rowEnd, colEnd, dist1 + 1, k)
-                    self.validateAndStoreRegion(rowEnd, colEnd, dist2 + 1, k)
-                    self.validateAndStoreRegion(rowEnd, colEnd, dist3 + 1, k)
+                        # Store the length of the optimal square region ending at current cell based on the previously obtained length and atmost k excemptions.
+                        self.validateAndStoreRegion(rowEnd, colEnd, length + 1, k)
 
         return self.resultIndicesArr
 
