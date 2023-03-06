@@ -177,7 +177,9 @@ def runFromTestFile():
     tasks = sys.argv[2].split(",")
     fileName = sys.argv[3]
     fileParts = fileName.split(".")
-    fp_opt = open("./output/" + fileParts[0] + "_output." + fileParts[1], "w")
+    fp_opt = open(
+        "./output/{0}_output_{1}.{2}".format(fileParts[0], tasks, fileParts[1]), "w"
+    )
     with open("./input/" + fileName, "r") as fp:
         n = 0
         m = 0

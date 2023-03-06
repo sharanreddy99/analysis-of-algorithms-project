@@ -81,7 +81,7 @@ class Main:
         return count
 
     # validateAndStoreRegion checks if the given region satisfies the min trees requirement and updates the result if we get a maximal square region.
-    def validateAndStoreRegion(self, rowEnd, colEnd, dist, k):
+    def validateAndStoreRegion(self, rowEnd, colEnd, dist):
         rowStart, colStart = self.getTopLeft(rowEnd, colEnd, dist)
         # if the newly found top left corner is a valid position, process the region.
         if rowStart > 0 and colStart > 0 and rowStart <= rowEnd and colStart <= colEnd:
@@ -107,7 +107,7 @@ class Main:
                 # We ensure that we have processed the current cell by setting it to 0 which by default is -1.
                 self.dp[rowEnd][colEnd] = max(self.dp[rowEnd][colEnd], 0)
 
-    def compute(self, rowEnd, colEnd, k):
+    def compute(self, rowEnd, colEnd):
         if rowEnd == 0 or colEnd == 0:
             self.dp[rowEnd][colEnd] = 0
             return 0
@@ -117,17 +117,17 @@ class Main:
             return self.dp[rowEnd][colEnd]
 
         for x, y in self.moves:
-            # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
-            length = self.compute(rowEnd + x, colEnd + y, k)
+            # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with corner exemptions.
+            length = self.compute(rowEnd + x, colEnd + y)
 
-            # Store the length of the optimal square region ending at current cell based on the previously obtained length and atmost k excemptions.
+            # Store the length of the optimal square region ending at current cell based on the previously obtained length and corner excemptions.
             for inc in range(-1, 2, 1):
-                self.validateAndStoreRegion(rowEnd, colEnd, length + inc, k)
+                self.validateAndStoreRegion(rowEnd, colEnd, length + inc)
 
         return self.dp[rowEnd][colEnd]
 
     def main(self):
-        self.compute(self.m, self.n, self.k)
+        self.compute(self.m, self.n)
         return self.resultIndicesArr
 
 

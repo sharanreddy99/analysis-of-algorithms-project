@@ -81,7 +81,7 @@ class Main:
         return count
 
     # validateAndStoreRegion checks if the given region satisfies the min trees requirement and updates the result if we get a maximal square region.
-    def validateAndStoreRegion(self, rowEnd, colEnd, dist, k):
+    def validateAndStoreRegion(self, rowEnd, colEnd, dist):
         rowStart, colStart = self.getTopLeft(rowEnd, colEnd, dist)
         # if the newly found top left corner is a valid position, process the region.
         if rowStart > 0 and colStart > 0 and rowStart <= rowEnd and colStart <= colEnd:
@@ -113,9 +113,7 @@ class Main:
 
                     # Store the length of the optimal square region ending at current cell based on the previously obtained length and atmost k excemptions.
                     for inc in range(-1, 2, 1):
-                        self.validateAndStoreRegion(
-                            rowEnd, colEnd, length + inc, self.k
-                        )
+                        self.validateAndStoreRegion(rowEnd, colEnd, length + inc)
 
         return self.resultIndicesArr
 
