@@ -5,11 +5,11 @@ noOfTests=1
 rm -rf plots/*
 rm -rf input/* output/*
 for ((x = 1; x <= $noOfTests; x++)); do
-    m=5
-    n=5
+    m=20
+    n=20
     h=5
-    maxDiff=2
-    testCases=10000
+    maxDiff=3
+    testCases=100
     tasks=6,7A,7B
     task=1
     outputRespFolder="./plots/Plot$x/"
