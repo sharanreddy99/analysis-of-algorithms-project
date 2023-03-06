@@ -32,6 +32,23 @@ class Main:
                     1 if self.p[i - 1][j - 1] >= self.h else 0
                 )
 
+    # getExemptionCellsCount returns the count of invalid plots from the corners of a given region which can be exempted.
+    def getExemptedCellsCount(self, rowStart, colStart, rowEnd, colEnd):
+        count = 0
+        if self.p[rowStart - 1][colStart - 1] < self.h:
+            count += 1
+
+        if self.p[rowStart - 1][colEnd - 1] < self.h:
+            count += 1
+
+        if self.p[rowEnd - 1][colStart - 1] < self.h:
+            count += 1
+
+        if self.p[rowEnd - 1][colEnd - 1] < self.h:
+            count += 1
+
+        return count
+
     def main(self):
         for cLeft in range(1, self.n + 1):
             for cRight in range(cLeft, self.n + 1):
@@ -41,27 +58,9 @@ class Main:
                     tempCount = self.dp[row][cRight] - self.dp[row][cLeft - 1]
 
                     validPlotsCount += tempCount
-                    exemptionCount = 0
-
-                    # exempt top left corner if its an invalid plot.
-                    if self.p[startRow - 1][cLeft - 1] < self.h:
-                        exemptionCount += 1
-
-                    # exempt top right corner if its an invalid plot.
-                    if cLeft != cRight and self.p[startRow - 1][cRight - 1] < self.h:
-                        exemptionCount += 1
-
-                    # exempt bottom left corner if its an invalid plot.
-                    if row != startRow and self.p[row - 1][cLeft - 1] < self.h:
-                        exemptionCount += 1
-
-                    # exempt bottom right corner if its an invalid plot.
-                    if (
-                        row != startRow
-                        and cLeft != cRight
-                        and self.p[row - 1][cRight - 1] < self.h
-                    ):
-                        exemptionCount += 1
+                    exemptionCount = self.getExemptedCellsCount(
+                        startRow, cLeft, row, cRight
+                    )
 
                     totRows = row - startRow + 1
                     totCols = cRight - cLeft + 1
@@ -74,7 +73,7 @@ class Main:
                     # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if required.
                     if (
                         totRows == totCols
-                        and (validPlotsCount + exemptionCount) == totRows * totCols
+                        and (validPlotsCount + exemptionCount) >= totRows * totCols
                         and totRows > self.maxSquareLen
                     ):
                         self.maxSquareLen = row

@@ -63,6 +63,7 @@ class Main:
         validCount += self.validCountArr[rowStart - 1][colStart - 1]
         return validCount
 
+    # getExemptionCellsCount returns the count of invalid plots from the corners of a given region which can be exempted.
     def getExemptedCellsCount(self, rowStart, colStart, rowEnd, colEnd):
         count = 0
         if self.p[rowStart - 1][colStart - 1] < self.h:
@@ -92,7 +93,7 @@ class Main:
             totRows = rowEnd - rowStart + 1
             totCols = colEnd - colStart + 1
 
-            if validCount + exemptedCount == totRows * totCols:
+            if validCount + exemptedCount >= totRows * totCols:
                 self.dp[rowEnd][colEnd] = max(self.dp[rowEnd][colEnd], dist)
 
                 # if the area enclosed by the boundaries forms a square region and is optimal than the previous result, store it.

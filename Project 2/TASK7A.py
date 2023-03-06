@@ -111,9 +111,6 @@ class Main:
 
     def main(self):
         self.compute(self.m, self.n, self.k)
-        # for i in range(self.k + 1):
-        #     print("TASK7A k - {0} => {1}".format(i, self.dp[i]))
-        # print()
         return self.resultIndicesArr
 
 
