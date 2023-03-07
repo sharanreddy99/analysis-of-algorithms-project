@@ -20,29 +20,26 @@ class Main:
         # Size of the maximal square plot
         self.maxSquareLen = 0
 
-        self.initDPArray()
-
-    def initDPArray(self):
-        # Stores the count of plots in a given plot that satisfy the min trees requirement.
-        self.dp = [[0 for i in range(self.n + 1)] for j in range(2)]
+        # Stores the count of valid plots for each column.
+        self.colSum = [[0 for i in range(self.n + 1)] for j in range(2)]
 
     def main(self):
         # The first two loops fix the upper left corner for the given square plot.
         for rowStart in range(1, self.m + 1):
             for colStart in range(1, self.n + 1):
-                # Clear the previous memorized values
+                # Reset column sum
                 for x in range(2):
                     for y in range(self.n + 1):
-                        self.dp[x][y] = 0
+                        self.colSum[x][y] = 0
 
                 # The next two loops fix the lower right corner for the square plot whose upper left corner is fixed and compute the no of mintree plots
                 # in the given square based on the precomputed value from the previous row.
                 for rowEnd in range(rowStart, self.m + 1):
                     for colEnd in range(colStart, self.n + 1):
-                        self.dp[rowEnd % 2][colEnd] = (
-                            self.dp[rowEnd % 2][colEnd - 1]
-                            + self.dp[(rowEnd - 1) % 2][colEnd]
-                            - self.dp[(rowEnd - 1) % 2][colEnd - 1]
+                        self.colSum[rowEnd % 2][colEnd] = (
+                            self.colSum[rowEnd % 2][colEnd - 1]
+                            + self.colSum[(rowEnd - 1) % 2][colEnd]
+                            - self.colSum[(rowEnd - 1) % 2][colEnd - 1]
                             + (1 if self.p[rowEnd - 1][colEnd - 1] >= self.h else 0)
                         )
 
@@ -52,7 +49,7 @@ class Main:
                         # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if required.
                         if (
                             totRows == totCols
-                            and self.dp[rowEnd % 2][colEnd] == totRows * totCols
+                            and self.colSum[rowEnd % 2][colEnd] == totRows * totCols
                             and totRows > self.maxSquareLen
                         ):
                             self.resultIndicesArr[0] = rowStart
