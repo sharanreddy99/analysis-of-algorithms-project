@@ -26,7 +26,7 @@ rungentest:
 	python3 main.py generatetestcases "${m}" "${n}" "${h}" "${testcases}" "${task}" "${maxDiff}"
 runfromtestfile:
 	python3 main.py runfromtestfile "${tasks}" "${filename}"
-# runplotoutput:
-# 	python3 main.py plotoutput "${xaxis}" "${yaxis}" "${xlabel}" "${ylabel}" "${filename}" "${foldername}" "${tasks}"
-# rungentable:
-# 	python3 main.py rungentable "${filename}" "${foldername}" "${tasks}"
+runplotoutput:
+	python3 main.py plotoutput "${xaxis}" "${yaxis}" "${xlabel}" "${ylabel}" "${filename}" "${foldername}" "${tasks}"
+rungentable:
+	python3 main.py rungentable "${filename}" "${foldername}" "${tasks}"
