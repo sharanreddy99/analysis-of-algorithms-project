@@ -29,4 +29,4 @@ runfromtestfile:
 runplotoutput:
 	python3 main.py plotoutput "${xaxis}" "${yaxis}" "${xlabel}" "${ylabel}" "${filename}" "${foldername}" "${tasks}"
 rungentable:
-	python3 main.py rungentable "${filename}" "${foldername}" "${tasks}"
+	python3 main.py rungentable "${filename}" "${foldername}" "${tasks}" "${testcases}"
