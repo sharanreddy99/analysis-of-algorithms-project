@@ -18,7 +18,7 @@ def task1generator(m, n, h, maxDiff):
 def taskmngenerator(m, n, h, maxDiff):
     new_m = m
     new_n = n
-    new_k = randint(0, max(new_m, new_n))
+    new_k = randint(0, new_m * new_n)
 
     p = [[0 for j in range(new_n)] for i in range(new_m)]
 

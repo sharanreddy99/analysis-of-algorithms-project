@@ -59,8 +59,10 @@ def readDummyInput():
 
 # generateDummyInput generates the dummy data based on user's input requirements
 def generateDummyInput(m, n, h, task, maxDiff):
-    m, n, h, k, p = eval("task{0}generator(m, n, h, maxDiff)".format(task))
-    return m, n, h, k, p
+    new_m, new_n, new_h, new_k, new_p = eval(
+        "task{0}generator(m, n, h, maxDiff)".format(task)
+    )
+    return new_m, new_n, new_h, new_k, new_p
 
 
 def plotPandasTable():

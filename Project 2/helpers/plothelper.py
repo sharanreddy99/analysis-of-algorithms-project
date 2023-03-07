@@ -58,7 +58,9 @@ def plotDataFromOutputFile():
             while True:
                 chunk = fp.readline().rstrip("\n ")
                 if chunk == "":
-                    break
+                    chunk = fp.readline().rstrip("\n ")
+                    if chunk == "":
+                        break
                 data = json.loads(chunk)
                 for key in data:
                     if key == "task":

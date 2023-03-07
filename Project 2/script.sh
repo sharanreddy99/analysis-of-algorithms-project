@@ -21,9 +21,9 @@ for ((x = 1; x <= $noOfTests; x++)); do
         make runfromtestfile tasks="1,2,3" filename=$inpFileName
         make runfromtestfile tasks="4,5A,5B" filename=$inpFileName
         make runfromtestfile tasks="6,7A,7B" filename=$inpFileName
-        make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime.png" foldername=${outputRespFolder} tasks="1,2,3"
-        make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime.png" foldername=${outputRespFolder} tasks="4,5A,5B"
-        make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime.png" foldername=${outputRespFolder} tasks="6,7A,7B"
+        make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime_123.png" foldername=${outputRespFolder} tasks="1,2,3"
+        make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime_45A5B.png" foldername=${outputRespFolder} tasks="4,5A,5B"
+        make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime_67A7B.png" foldername=${outputRespFolder} tasks="6,7A,7B"
         # make rungentable filename="table.html" foldername=${outputRespFolder} tasks=${tasks}
     done
 
