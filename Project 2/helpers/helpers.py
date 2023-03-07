@@ -3,15 +3,7 @@ import string
 import sys
 import json
 
-import TASK1
-import TASK2
-import TASK3
-import TASK4
-import TASK5A
-import TASK5B
-import TASK6
-import TASK7A
-import TASK7B
+import TASK1, TASK2, TASK3, TASK4, TASK5A, TASK5B, TASK6, TASK7A, TASK7B
 
 from .iohelpers import generateDummyInput, readDummyInput
 from .timehelpers import startTimer, returnExecutionTime
@@ -226,10 +218,10 @@ def generateRandomInputFile():
     n = int(sys.argv[3])
     h = int(sys.argv[4])
     testCases = int(sys.argv[5])
-    task = int(sys.argv[6])
+    task = sys.argv[6]
     maxDiff = int(sys.argv[7])
     writeFile = (
-        "testcases_" + "".join(random.choices(string.ascii_lowercase, k=8)) + ".txt"
+        "testcases_" + "".join(random.choices(string.ascii_lowercase, k=8)) + "_" + task + ".txt"
     )
 
     with open("./input/" + writeFile, "w") as fp:
@@ -248,7 +240,10 @@ def runFromTestFile():
     fileName = sys.argv[3]
     fileParts = fileName.split(".")
     fp_opt = open(
-        "./output/{0}_output_{1}.{2}".format(fileParts[0], tasks, fileParts[1]), "w"
+        "./output/{0}_output_{1}.{2}".format(
+            fileParts[0], "".join(tasks), fileParts[1]
+        ),
+        "w",
     )
     with open("./input/" + fileName, "r") as fp:
         n = 0

@@ -8,6 +8,9 @@ import sys
 
 from .randomlogichelper import (
     task1generator,
+    taskmngenerator,
+    taskmkgenerator,
+    tasknkgenerator,
 )
 
 
