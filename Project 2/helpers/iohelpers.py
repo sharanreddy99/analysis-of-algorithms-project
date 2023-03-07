@@ -3,6 +3,7 @@ import os
 from random import randint, choices
 import string
 import sys
+import dataframe_image as dfi
 
 import pandas as pd
 
@@ -85,7 +86,7 @@ def plotPandasTableDefault():
     dirList = os.listdir("./output")
     for fileName in dirList:
         with open("./output/" + fileName, "r") as fp:
-            if "6" in fileName or "7" in fileName:
+            if "".join(tasks) not in fileName:
                 continue
 
             indicesMap = {i: 0 for i in tasks}
@@ -129,8 +130,8 @@ def plotPandasTableDefault():
     rowIdx = pd.MultiIndex.from_tuples(list(keys), names=["ID", "N", "M", "H"])
     colIdx = pd.MultiIndex.from_tuples(colIndices)
     df = pd.DataFrame(list(dataMap.values()), index=rowIdx, columns=colIdx)
-    with open(filename, "w") as fp:
-        fp.write(df.style.applymap(lambda x: "color:green;").to_html())
+    df_styled = df.style.background_gradient()
+    dfi.export(df_styled, filename)
 
 
 def plotPandasTableProblem3():
@@ -153,7 +154,7 @@ def plotPandasTableProblem3():
     dirList = os.listdir("./output")
     for fileName in dirList:
         with open("./output/" + fileName, "r") as fp:
-            if not ("6" in fileName or "7" in fileName):
+            if "".join(tasks) not in fileName:
                 continue
 
             indicesMap = {i: 0 for i in tasks}
@@ -195,16 +196,19 @@ def plotPandasTableProblem3():
             dataMap[key].append(row[5])
 
     keys = [key[0:5] for key in dataMap]
-    rowIdx = pd.MultiIndex.from_tuples(list(keys), names=["ID", "N", "M", "H", "K"])
+    rowIdx = pd.MultiIndex.from_tuples(
+        list(keys),
+        names=["ID", "N", "M", "H", "K"],
+    )
     colIdx = pd.MultiIndex.from_tuples(colIndices)
     df = pd.DataFrame(list(dataMap.values()), index=rowIdx, columns=colIdx)
-    with open(filename, "w") as fp:
-        fp.write(df.style.applymap(lambda x: "color:green;").to_html())
+    df_styled = df.style.background_gradient()
+    dfi.export(df_styled, filename)
 
 
 def plotPandasTable():
     filename = sys.argv[2]
-    if "6" in filename or "7" in filename:
+    if "prob3" in filename:
         plotPandasTableProblem3()
     else:
         plotPandasTableDefault()
