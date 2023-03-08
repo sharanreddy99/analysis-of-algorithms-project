@@ -98,7 +98,9 @@ def plotLineGraph(dataArr, xLabel, yLabel, fileName):
 
     ax.set_xlabel(xLabel, labelpad=10)
     ax.set_ylabel(yLabel, labelpad=10)
-    ax.set_title("{0} vs {1} when the others are constant".format(xLabel, yLabel))
+    ax.set_title(
+        "{0} vs {1} when the other metrics are constant".format(xLabel, yLabel)
+    )
     ax.legend(loc="upper left")
     fileParts = fileName.split(".")
     fileName = ".".join([fileParts[0], fileParts[1] + "_line", fileParts[2]])
@@ -129,7 +131,9 @@ def plotBarGraph(dataArr, xLabel, yLabel, fileName):
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_xlabel(xLabel)
     ax.set_ylabel(yLabel)
-    ax.set_title("{0} vs {1} when the others are constant".format(xLabel, yLabel))
+    ax.set_title(
+        "{0} vs {1} when the other metrics are constant".format(xLabel, yLabel)
+    )
     ax.set_xticks(x + width, xAxisData)
     ax.legend(loc="upper left", ncols=1)
 

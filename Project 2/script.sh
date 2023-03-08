@@ -11,7 +11,7 @@ for ((x = 1; x <= $noOfTests; x++)); do
     testCases=8
     fixedAxis=("mn" "mk" "nk")
     variableAxis=("k" "n" "m")
-    variableAxisLabels=("Faulty Plots" "No of Columns" "No of Rows")
+    variableAxisLabels=("Faulty Plots (k)" "No of Columns (n)" "No of Rows (m)")
     outputRespFolder="./plots/Plot$x/"
 
     for idx in {0..2}; do
