@@ -109,13 +109,8 @@ def plotLineGraph(dataArr, xLabel, yLabel, fileName):
 
 def plotBarGraph(dataArr, xLabel, yLabel, fileName):
     xAxisData = dataArr[0]["xData"]
-    yAxisData = {
-        "TASK - {0}".format(i + 1): dataArr[i]["yData"] for i in range(len(dataArr))
-    }
-
-    colors = {
-        "TASK - {0}".format(i + 1): dataArr[i]["color"] for i in range(len(dataArr))
-    }
+    yAxisData = {dataArr[i]["label"]: dataArr[i]["yData"] for i in range(len(dataArr))}
+    colors = {dataArr[i]["label"]: dataArr[i]["color"] for i in range(len(dataArr))}
 
     x = np.arange(len(xAxisData))
     width = 0.25
