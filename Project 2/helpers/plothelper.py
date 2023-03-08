@@ -36,13 +36,13 @@ def plotDataFromOutputFile():
     attributesMap = {
         "1": {"borderStyle": "m--", "color": "#ffa600"},
         "2": {"borderStyle": "r-.", "color": "#ff6361"},
-        "3": {"borderStyle": "k-o", "color": "#bc5090"},
+        "3": {"borderStyle": "y-o", "color": "#bc5090"},
         "4": {"borderStyle": "m--", "color": "#ffa600"},
         "5A": {"borderStyle": "r-.", "color": "#ff6361"},
-        "5B": {"borderStyle": "k-o", "color": "#bc5090"},
+        "5B": {"borderStyle": "y-o", "color": "#bc5090"},
         "6": {"borderStyle": "m--", "color": "#ffa600"},
         "7A": {"borderStyle": "r-.", "color": "#ff6361"},
-        "7B": {"borderStyle": "k-o", "color": "#bc5090"},
+        "7B": {"borderStyle": "y-o", "color": "#bc5090"},
     }
 
     for key in dataArr:
@@ -88,17 +88,21 @@ def plotDataFromOutputFile():
         )
 
     plotBarGraph(plotDataArr, xLabel, yLabel, filename)
+    plotLineGraph(plotDataArr, xLabel, yLabel, filename)
 
 
-def plotLineGraph(dataArr, xLabel, yLabel, filename):
-    pass
-    # for row in dataArr:
-    #     plt.plot(row["xData"], row["yData"], row["borderStyle"], label=row["label"])
+def plotLineGraph(dataArr, xLabel, yLabel, fileName):
+    _, ax = plt.subplots(constrained_layout=True)
+    for row in dataArr:
+        ax.plot(row["xData"], row["yData"], row["borderStyle"], label=row["label"])
 
-    # plt.xlabel(xLabel, labelpad=10)
-    # plt.ylabel(yLabel, labelpad=10)
-    # plt.legend(loc="upper left")
-    # plt.savefig(filename)
+    ax.set_xlabel(xLabel, labelpad=10)
+    ax.set_ylabel(yLabel, labelpad=10)
+    ax.set_title("{0} vs {1} when the others are constant".format(xLabel, yLabel))
+    ax.legend(loc="upper left")
+    fileParts = fileName.split(".")
+    fileName = ".".join([fileParts[0], fileParts[1] + "_line", fileParts[2]])
+    plt.savefig(fileName)
 
 
 def plotBarGraph(dataArr, xLabel, yLabel, fileName):
@@ -129,4 +133,6 @@ def plotBarGraph(dataArr, xLabel, yLabel, fileName):
     ax.set_xticks(x + width, xAxisData)
     ax.legend(loc="upper left", ncols=1)
 
+    fileParts = fileName.split(".")
+    fileName = ".".join([fileParts[0], fileParts[1] + "_bar", fileParts[2]])
     plt.savefig(fileName)
