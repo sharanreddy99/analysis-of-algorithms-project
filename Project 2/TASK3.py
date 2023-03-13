@@ -44,7 +44,7 @@ class Main:
                 else:
                     self.dp[i % 2][j] = 0
 
-                # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if required.
+                # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if bigger than the previous maximal result.
                 if self.dp[i % 2][j] > self.maxSquareLen:
                     self.resultIndicesArr[0] = i - self.dp[i % 2][j] + 1
                     self.resultIndicesArr[1] = j - self.dp[i % 2][j] + 1

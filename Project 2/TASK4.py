@@ -67,33 +67,32 @@ class Main:
 
         return count
 
+    # validateAndStoreRegion checks if the given region satisfies the min trees requirement and updates the result if we get a maximal square region.
+    def validateAndStoreRegion(self, rowEnd, colEnd, dist):
+        rowStart, colStart = self.getTopLeft(rowEnd, colEnd, dist)
+        # if the newly found top left corner is a valid position, process the region.
+        if rowStart > 0 and colStart > 0 and rowStart <= rowEnd and colStart <= colEnd:
+            validCount = self.getValidCount(rowStart, colStart, rowEnd, colEnd)
+            exemptedCount = self.getExemptedCellsCount(
+                rowStart, colStart, rowEnd, colEnd
+            )
+
+            # if the region formed is a valid square plot with corner exemptions and is bigger than the previous maximal result, store it.
+            if validCount + exemptedCount >= dist * dist and dist > self.maxSquareLen:
+                self.resultIndicesArr[0] = rowStart
+                self.resultIndicesArr[1] = colStart
+                self.resultIndicesArr[2] = rowEnd
+                self.resultIndicesArr[3] = colEnd
+                self.maxSquareLen = dist
+
     def main(self):
+        # fix the top left corner of the required region at each point in the grid.
         for rowStart in range(1, self.m + 1):
             for colStart in range(1, self.n + 1):
+                # Pull the bottom right corner diagonally and validate the region and store if maximal square region.
                 for inc in range(min(self.m - rowStart + 1, self.n - colStart + 1)):
                     rowEnd, colEnd = rowStart + inc, colStart + inc
-                    validPlotsCount = self.getValidCount(
-                        rowStart, colStart, rowEnd, colEnd
-                    )
-                    exemptionCount = self.getExemptedCellsCount(
-                        rowStart, colStart, rowEnd, colEnd
-                    )
-
-                    totRows = rowEnd - rowStart + 1
-                    totCols = colEnd - colStart + 1
-
-                    # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if required.
-                    if (
-                        totRows == totCols
-                        and (validPlotsCount + exemptionCount) >= totRows * totCols
-                        and totRows > self.maxSquareLen
-                    ):
-                        self.maxSquareLen = totRows
-                        self.resultIndicesArr[0] = rowStart
-                        self.resultIndicesArr[1] = colStart
-                        self.resultIndicesArr[2] = rowEnd
-                        self.resultIndicesArr[3] = colEnd
-
+                    self.validateAndStoreRegion(rowEnd, colEnd, inc + 1)
         return self.resultIndicesArr
 
 

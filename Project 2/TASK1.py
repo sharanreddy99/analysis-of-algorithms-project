@@ -39,7 +39,7 @@ class Main:
                         totRows = rowEnd - rowStart + 1
                         totCols = colEnd - colStart + 1
 
-                        # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if required.
+                        # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if bigger than the previous maximal result.
                         if (
                             totRows == totCols
                             and validPlotsCount == totRows * totCols

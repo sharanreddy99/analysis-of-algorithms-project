@@ -80,31 +80,38 @@ class Main:
                 rowStart, colStart, rowEnd, colEnd
             )
 
-            totRows = rowEnd - rowStart + 1
-            totCols = colEnd - colStart + 1
-
-            if validCount + exemptedCount >= totRows * totCols:
+            # if the area enclosed by the boundaries forms a square region, update the computation array to store the area of the largest maximal square plot ending at current position.
+            if validCount + exemptedCount >= dist * dist:
                 self.dp[rowEnd][colEnd] = max(self.dp[rowEnd][colEnd], dist)
 
-                # if the area enclosed by the boundaries forms a square region and is optimal than the previous result, store it.
-                if totRows == totCols and totRows > self.maxSquareLen:
+                # If the current square plot is optimal than the previous result, store it
+                if dist > self.maxSquareLen:
                     self.resultIndicesArr[0] = rowStart
                     self.resultIndicesArr[1] = colStart
                     self.resultIndicesArr[2] = rowEnd
                     self.resultIndicesArr[3] = colEnd
-                    self.maxSquareLen = totRows
+                    self.maxSquareLen = dist
 
     def main(self):
         for rowEnd in range(1, self.m + 1):
             for colEnd in range(1, self.n + 1):
+                # find the minimum area of the square plots ending at the surrounding plots of the current plot.
                 length = min(
                     self.dp[rowEnd - 1][colEnd - 1],
                     self.dp[rowEnd - 1][colEnd],
                     self.dp[rowEnd][colEnd - 1],
                 )
+
+                # square of size 1 is always valid as the corners are always exempted.
                 self.validateAndStoreRegion(rowEnd, colEnd, 1)
+
+                # square of size 2 is always valid as the four corners are always exempted.
                 self.validateAndStoreRegion(rowEnd, colEnd, 2)
+
+                # check if the square of size length forms a valid square plot with corner exemptions and store it if maximal
                 self.validateAndStoreRegion(rowEnd, colEnd, length)
+
+                # check if the square of size length + 1 forms a valid square plot with corner exemptions and store it if maximal
                 self.validateAndStoreRegion(rowEnd, colEnd, length + 1)
 
         return self.resultIndicesArr
