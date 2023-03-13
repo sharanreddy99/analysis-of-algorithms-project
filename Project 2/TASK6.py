@@ -42,7 +42,7 @@ class Main:
                         totRows = rowEnd - rowStart + 1
                         totCols = colEnd - colStart + 1
 
-                        # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement without crossing the exempted limit and store it if required.
+                        # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement without crossing the exempted limit and store it if bigger than the previous maximal square plot.
                         if (
                             totRows == totCols
                             and inValidPlotsCount <= self.k
