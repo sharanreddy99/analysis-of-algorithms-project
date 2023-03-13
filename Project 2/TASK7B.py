@@ -90,15 +90,15 @@ class Main:
     def main(self):
         for rowEnd in range(1, self.m + 1):
             for colEnd in range(1, self.n + 1):
-                for x, y in self.moves:
-                    # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
-                    length = self.dp[rowEnd + x][colEnd + y]
+                # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
 
-                    # Store the length of the optimal square region ending at current cell based on the previously obtained length and atmost k excemptions.
-                    for inc in range(-1, 2, 1):
-                        self.validateAndStoreRegion(
-                            rowEnd, colEnd, length + inc, self.k
-                        )
+                length = min(
+                    self.dp[rowEnd - 1][colEnd],
+                    self.dp[rowEnd][colEnd - 1],
+                    self.dp[rowEnd - 1][colEnd - 1],
+                )
+                self.dp[rowEnd][colEnd] = length
+                self.validateAndStoreRegion(rowEnd, colEnd, length + 1, self.k)
 
         return self.resultIndicesArr
 
