@@ -20,21 +20,11 @@ class Main:
         # Size of the maximal square plot
         self.maxSquareLen = 0
 
-        # list of possible moves with respect to current plot to check for previously computed maximal square region lengths.
-        self.moves = [
-            # top left
-            [-1, -1],
-            # left
-            [0, -1],
-            # top
-            [-1, 0],
-        ]
-
         self.initDPArray()
 
     def initDPArray(self):
         # DP[i,j] indicates the largest possible square length having bottom right corner as i,j with corner exemptions.
-        self.dp = [[0 for x in range(self.n + 1)] for y in range(self.m + 1)]
+        self.dp = [[-1 for x in range(self.n + 1)] for y in range(self.m + 1)]
 
         # validCountArr stores the no of plots satisfying the min tree requirement in the given region bounded by top left (0, 0)
         # and bottom right (i, j)
@@ -107,13 +97,15 @@ class Main:
     def main(self):
         for rowEnd in range(1, self.m + 1):
             for colEnd in range(1, self.n + 1):
-                for x, y in self.moves:
-                    # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
-                    length = self.dp[rowEnd + x][colEnd + y]
-
-                    # Store the length of the optimal square region ending at current cell based on the previously obtained length and atmost k excemptions.
-                    for inc in range(-1, 2, 1):
-                        self.validateAndStoreRegion(rowEnd, colEnd, length + inc)
+                length = min(
+                    self.dp[rowEnd - 1][colEnd - 1],
+                    self.dp[rowEnd - 1][colEnd],
+                    self.dp[rowEnd][colEnd - 1],
+                )
+                self.validateAndStoreRegion(rowEnd, colEnd, 1)
+                self.validateAndStoreRegion(rowEnd, colEnd, 2)
+                self.validateAndStoreRegion(rowEnd, colEnd, length)
+                self.validateAndStoreRegion(rowEnd, colEnd, length + 1)
 
         return self.resultIndicesArr
 

@@ -20,16 +20,6 @@ class Main:
         # Size of the maximal square plot
         self.maxSquareLen = 0
 
-        # list of possible moves with respect to current plot to check for previously computed maximal square region lengths.
-        self.moves = [
-            # top left
-            [-1, -1],
-            # left
-            [0, -1],
-            # top
-            [-1, 0],
-        ]
-
         self.initDPArray()
 
     def initDPArray(self):
@@ -103,9 +93,6 @@ class Main:
                     self.resultIndicesArr[2] = rowEnd
                     self.resultIndicesArr[3] = colEnd
                     self.maxSquareLen = totRows
-            else:
-                # We ensure that we have processed the current cell by setting it to 0 which by default is -1.
-                self.dp[rowEnd][colEnd] = max(self.dp[rowEnd][colEnd], 0)
 
     def compute(self, rowEnd, colEnd):
         if rowEnd == 0 or colEnd == 0:
@@ -116,13 +103,15 @@ class Main:
         if self.dp[rowEnd][colEnd] != -1:
             return self.dp[rowEnd][colEnd]
 
-        for x, y in self.moves:
-            # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with corner exemptions.
-            length = self.compute(rowEnd + x, colEnd + y)
-
-            # Store the length of the optimal square region ending at current cell based on the previously obtained length and corner excemptions.
-            for inc in range(-1, 2, 1):
-                self.validateAndStoreRegion(rowEnd, colEnd, length + inc)
+        length = min(
+            self.compute(rowEnd - 1, colEnd - 1),
+            self.compute(rowEnd - 1, colEnd),
+            self.compute(rowEnd, colEnd - 1),
+        )
+        self.validateAndStoreRegion(rowEnd, colEnd, 1)
+        self.validateAndStoreRegion(rowEnd, colEnd, 2)
+        self.validateAndStoreRegion(rowEnd, colEnd, length)
+        self.validateAndStoreRegion(rowEnd, colEnd, length + 1)
 
         return self.dp[rowEnd][colEnd]
 
