@@ -108,9 +108,6 @@ class Main:
                 # square of size 2 is always valid as the four corners are always exempted.
                 self.validateAndStoreRegion(rowEnd, colEnd, 2)
 
-                # check if the square of size length forms a valid square plot with corner exemptions and store it if maximal
-                self.validateAndStoreRegion(rowEnd, colEnd, length)
-
                 # check if the square of size length + 1 forms a valid square plot with corner exemptions and store it if maximal
                 self.validateAndStoreRegion(rowEnd, colEnd, length + 1)
 
