@@ -3,9 +3,10 @@ import os
 from random import randint, choices
 import string
 import sys
-import dataframe_image as dfi
 
-import pandas as pd
+# import dataframe_image as dfi
+
+# import pandas as pd
 
 from .randomlogichelper import (
     task1generator,
@@ -67,143 +68,145 @@ def generateDummyInput(m, n, h, task, maxDiff):
 
 
 def plotPandasTableDefault():
-    filename = sys.argv[2]
-    foldername = sys.argv[3]
-    tasks = sys.argv[4].split(",")
-    testcases = int(sys.argv[5])
-    createFolderIfDoesntExist(foldername)
-    filename = foldername + filename
+    pass
+    # filename = sys.argv[2]
+    # foldername = sys.argv[3]
+    # tasks = sys.argv[4].split(",")
+    # testcases = int(sys.argv[5])
+    # createFolderIfDoesntExist(foldername)
+    # filename = foldername + filename
 
-    dataArr = {
-        i: {
-            "combinedData": [],
-        }
-        for i in tasks
-    }
+    # dataArr = {
+    #     i: {
+    #         "combinedData": [],
+    #     }
+    #     for i in tasks
+    # }
 
-    keysMap = {i: i for i in range(testcases)}
+    # keysMap = {i: i for i in range(testcases)}
 
-    dirList = os.listdir("./output")
-    for fileName in dirList:
-        with open("./output/" + fileName, "r") as fp:
-            if "".join(tasks) not in fileName:
-                continue
+    # dirList = os.listdir("./output")
+    # for fileName in dirList:
+    #     with open("./output/" + fileName, "r") as fp:
+    #         if "".join(tasks) not in fileName:
+    #             continue
 
-            indicesMap = {i: 0 for i in tasks}
+    #         indicesMap = {i: 0 for i in tasks}
 
-            while True:
-                chunk = fp.readline().rstrip("\n ")
-                if chunk == "":
-                    chunk = fp.readline().rstrip("\n ")
-                    if chunk == "":
-                        break
+    #         while True:
+    #             chunk = fp.readline().rstrip("\n ")
+    #             if chunk == "":
+    #                 chunk = fp.readline().rstrip("\n ")
+    #                 if chunk == "":
+    #                     break
 
-                data = json.loads(chunk)
-                dataArr[data["task"]]["combinedData"].append(
-                    (
-                        data["n"],
-                        data["m"],
-                        data["h"],
-                        data["resp"],
-                        data["executionTime"],
-                        keysMap[indicesMap[data["task"]]],
-                    )
-                )
+    #             data = json.loads(chunk)
+    #             dataArr[data["task"]]["combinedData"].append(
+    #                 (
+    #                     data["n"],
+    #                     data["m"],
+    #                     data["h"],
+    #                     data["resp"],
+    #                     data["executionTime"],
+    #                     keysMap[indicesMap[data["task"]]],
+    #                 )
+    #             )
 
-                indicesMap[data["task"]] += 1
+    #             indicesMap[data["task"]] += 1
 
-    for i in tasks:
-        dataArr[i]["combinedData"].sort(key=lambda x: x[0])
+    # for i in tasks:
+    #     dataArr[i]["combinedData"].sort(key=lambda x: x[0])
 
-    dataMap = {}
-    colIndices = []
-    for i in tasks:
-        colIndices.append(("TASK - " + str(i), "Execution Time"))
+    # dataMap = {}
+    # colIndices = []
+    # for i in tasks:
+    #     colIndices.append(("TASK - " + str(i), "Execution Time"))
 
-    for idx in tasks:
-        for row in dataArr[idx]["combinedData"]:
-            key = (row[5], row[0], row[1], row[2])
-            dataMap[key] = dataMap.get(key, [])
-            dataMap[key].append(row[4])
+    # for idx in tasks:
+    #     for row in dataArr[idx]["combinedData"]:
+    #         key = (row[5], row[0], row[1], row[2])
+    #         dataMap[key] = dataMap.get(key, [])
+    #         dataMap[key].append(row[4])
 
-    keys = [key[0:4] for key in dataMap]
-    rowIdx = pd.MultiIndex.from_tuples(list(keys), names=["ID", "N", "M", "H"])
-    colIdx = pd.MultiIndex.from_tuples(colIndices)
-    df = pd.DataFrame(list(dataMap.values()), index=rowIdx, columns=colIdx)
-    df_styled = df.style.background_gradient()
-    dfi.export(df_styled, filename)
+    # keys = [key[0:4] for key in dataMap]
+    # rowIdx = pd.MultiIndex.from_tuples(list(keys), names=["ID", "N", "M", "H"])
+    # colIdx = pd.MultiIndex.from_tuples(colIndices)
+    # df = pd.DataFrame(list(dataMap.values()), index=rowIdx, columns=colIdx)
+    # df_styled = df.style.background_gradient()
+    # dfi.export(df_styled, filename)
 
 
 def plotPandasTableProblem3():
-    filename = sys.argv[2]
-    foldername = sys.argv[3]
-    tasks = sys.argv[4].split(",")
-    testcases = int(sys.argv[5])
-    createFolderIfDoesntExist(foldername)
-    filename = foldername + filename
+    # filename = sys.argv[2]
+    # foldername = sys.argv[3]
+    # tasks = sys.argv[4].split(",")
+    # testcases = int(sys.argv[5])
+    # createFolderIfDoesntExist(foldername)
+    # filename = foldername + filename
 
-    dataArr = {
-        i: {
-            "combinedData": [],
-        }
-        for i in tasks
-    }
+    # dataArr = {
+    #     i: {
+    #         "combinedData": [],
+    #     }
+    #     for i in tasks
+    # }
 
-    keysMap = {i: i for i in range(testcases)}
+    # keysMap = {i: i for i in range(testcases)}
 
-    dirList = os.listdir("./output")
-    for fileName in dirList:
-        with open("./output/" + fileName, "r") as fp:
-            if "".join(tasks) not in fileName:
-                continue
+    # dirList = os.listdir("./output")
+    # for fileName in dirList:
+    #     with open("./output/" + fileName, "r") as fp:
+    #         if "".join(tasks) not in fileName:
+    #             continue
 
-            indicesMap = {i: 0 for i in tasks}
+    #         indicesMap = {i: 0 for i in tasks}
 
-            while True:
-                chunk = fp.readline().rstrip("\n ")
-                if chunk == "":
-                    chunk = fp.readline().rstrip("\n ")
-                    if chunk == "":
-                        break
+    #         while True:
+    #             chunk = fp.readline().rstrip("\n ")
+    #             if chunk == "":
+    #                 chunk = fp.readline().rstrip("\n ")
+    #                 if chunk == "":
+    #                     break
 
-                data = json.loads(chunk)
-                dataArr[data["task"]]["combinedData"].append(
-                    (
-                        data["n"],
-                        data["m"],
-                        data["h"],
-                        data["k"],
-                        data["resp"],
-                        data["executionTime"],
-                        keysMap[indicesMap[data["task"]]],
-                    )
-                )
+    #             data = json.loads(chunk)
+    #             dataArr[data["task"]]["combinedData"].append(
+    #                 (
+    #                     data["n"],
+    #                     data["m"],
+    #                     data["h"],
+    #                     data["k"],
+    #                     data["resp"],
+    #                     data["executionTime"],
+    #                     keysMap[indicesMap[data["task"]]],
+    #                 )
+    #             )
 
-                indicesMap[data["task"]] += 1
+    #             indicesMap[data["task"]] += 1
 
-    for i in tasks:
-        dataArr[i]["combinedData"].sort(key=lambda x: x[0])
+    # for i in tasks:
+    #     dataArr[i]["combinedData"].sort(key=lambda x: x[0])
 
-    dataMap = {}
-    colIndices = []
-    for i in tasks:
-        colIndices.append(("TASK - " + str(i), "Execution Time"))
+    # dataMap = {}
+    # colIndices = []
+    # for i in tasks:
+    #     colIndices.append(("TASK - " + str(i), "Execution Time"))
 
-    for idx in tasks:
-        for row in dataArr[idx]["combinedData"]:
-            key = (row[6], row[0], row[1], row[2], row[3])
-            dataMap[key] = dataMap.get(key, [])
-            dataMap[key].append(row[5])
+    # for idx in tasks:
+    #     for row in dataArr[idx]["combinedData"]:
+    #         key = (row[6], row[0], row[1], row[2], row[3])
+    #         dataMap[key] = dataMap.get(key, [])
+    #         dataMap[key].append(row[5])
 
-    keys = [key[0:5] for key in dataMap]
-    rowIdx = pd.MultiIndex.from_tuples(
-        list(keys),
-        names=["ID", "N", "M", "H", "K"],
-    )
-    colIdx = pd.MultiIndex.from_tuples(colIndices)
-    df = pd.DataFrame(list(dataMap.values()), index=rowIdx, columns=colIdx)
-    df_styled = df.style.background_gradient()
-    dfi.export(df_styled, filename)
+    # keys = [key[0:5] for key in dataMap]
+    # rowIdx = pd.MultiIndex.from_tuples(
+    #     list(keys),
+    #     names=["ID", "N", "M", "H", "K"],
+    # )
+    # colIdx = pd.MultiIndex.from_tuples(colIndices)
+    # df = pd.DataFrame(list(dataMap.values()), index=rowIdx, columns=colIdx)
+    # df_styled = df.style.background_gradient()
+    # dfi.export(df_styled, filename)
+    pass
 
 
 def plotPandasTable():

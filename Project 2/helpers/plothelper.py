@@ -2,8 +2,8 @@ import json
 import os
 import sys
 
-from matplotlib import pyplot as plt
-import numpy as np
+# from matplotlib import pyplot as plt
+# import numpy as np
 
 from helpers.iohelpers import createFolderIfDoesntExist
 
@@ -92,46 +92,48 @@ def plotDataFromOutputFile():
 
 
 def plotLineGraph(dataArr, xLabel, yLabel, fileName):
-    _, ax = plt.subplots(constrained_layout=True)
-    for row in dataArr:
-        ax.plot(row["xData"], row["yData"], row["borderStyle"], label=row["label"])
+    pass
+    # _, ax = plt.subplots(constrained_layout=True)
+    # for row in dataArr:
+    #     ax.plot(row["xData"], row["yData"], row["borderStyle"], label=row["label"])
 
-    ax.set_xlabel(xLabel, labelpad=10)
-    ax.set_ylabel(yLabel, labelpad=10)
-    ax.set_title(
-        "{0} vs {1} when the other metrics are constant".format(xLabel, yLabel)
-    )
-    ax.legend(loc="upper left")
-    fileParts = fileName.split(".")
-    fileName = ".".join([fileParts[0], fileParts[1] + "_line", fileParts[2]])
-    plt.savefig(fileName)
+    # ax.set_xlabel(xLabel, labelpad=10)
+    # ax.set_ylabel(yLabel, labelpad=10)
+    # ax.set_title(
+    #     "{0} vs {1} when the other metrics are constant".format(xLabel, yLabel)
+    # )
+    # ax.legend(loc="upper left")
+    # fileParts = fileName.split(".")
+    # fileName = ".".join([fileParts[0], fileParts[1] + "_line", fileParts[2]])
+    # plt.savefig(fileName)
 
 
 def plotBarGraph(dataArr, xLabel, yLabel, fileName):
-    xAxisData = dataArr[0]["xData"]
-    yAxisData = {dataArr[i]["label"]: dataArr[i]["yData"] for i in range(len(dataArr))}
-    colors = {dataArr[i]["label"]: dataArr[i]["color"] for i in range(len(dataArr))}
+    pass
+    # xAxisData = dataArr[0]["xData"]
+    # yAxisData = {dataArr[i]["label"]: dataArr[i]["yData"] for i in range(len(dataArr))}
+    # colors = {dataArr[i]["label"]: dataArr[i]["color"] for i in range(len(dataArr))}
 
-    x = np.arange(len(xAxisData))
-    width = 0.25
-    multiplier = 0
+    # x = np.arange(len(xAxisData))
+    # width = 0.25
+    # multiplier = 0
 
-    _, ax = plt.subplots(constrained_layout=True)
+    # _, ax = plt.subplots(constrained_layout=True)
 
-    for label, valArr in yAxisData.items():
-        offset = width * multiplier
-        rects = ax.bar(x + offset, valArr, width, label=label, color=colors[label])
-        multiplier += 1
+    # for label, valArr in yAxisData.items():
+    #     offset = width * multiplier
+    #     rects = ax.bar(x + offset, valArr, width, label=label, color=colors[label])
+    #     multiplier += 1
 
-    # Add some text for labels, title and custom x-axis tick labels, etc.
-    ax.set_xlabel(xLabel)
-    ax.set_ylabel(yLabel)
-    ax.set_title(
-        "{0} vs {1} when the other metrics are constant".format(xLabel, yLabel)
-    )
-    ax.set_xticks(x + width, xAxisData)
-    ax.legend(loc="upper left", ncols=1)
+    # # Add some text for labels, title and custom x-axis tick labels, etc.
+    # ax.set_xlabel(xLabel)
+    # ax.set_ylabel(yLabel)
+    # ax.set_title(
+    #     "{0} vs {1} when the other metrics are constant".format(xLabel, yLabel)
+    # )
+    # ax.set_xticks(x + width, xAxisData)
+    # ax.legend(loc="upper left", ncols=1)
 
-    fileParts = fileName.split(".")
-    fileName = ".".join([fileParts[0], fileParts[1] + "_bar", fileParts[2]])
-    plt.savefig(fileName)
+    # fileParts = fileName.split(".")
+    # fileName = ".".join([fileParts[0], fileParts[1] + "_bar", fileParts[2]])
+    # plt.savefig(fileName)
