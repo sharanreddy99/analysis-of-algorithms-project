@@ -13,7 +13,7 @@ run5A:
 run5B:
 	python3 main.py 5B
 run6:
-	# python3 main.py 6
+	python3 main.py 6
 run7A:
 	python3 main.py 7A
 run7B:
