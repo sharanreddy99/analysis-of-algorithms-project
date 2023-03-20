@@ -21,27 +21,27 @@ class Main:
         self.maxSquareLen = 0
 
         # Stores the count of valid plots for each column.
-        self.colSum = [[0 for i in range(self.n + 1)] for j in range(2)]
+        self.rowValidPlots = [0 for i in range(self.n)]
 
     def main(self):
         # The first two loops fix the upper left corner for the given square plot.
-        for rowStart in range(1, self.m + 1):
-            for colStart in range(1, self.n + 1):
-                # Reset column sum
-                for x in range(2):
-                    for y in range(self.n + 1):
-                        self.colSum[x][y] = 0
+        for rowStart in range(self.m):
+            for colStart in range(self.n):
+                # clear the previously stored valid plots.
+                for col in range(self.n):
+                    self.rowValidPlots[col] = 0
 
-                # The next two loops fix the lower right corner for the square plot whose upper left corner is fixed and compute the no of mintree plots
-                # in the given square based on the precomputed value from the previous row.
-                for rowEnd in range(rowStart, self.m + 1):
-                    for colEnd in range(colStart, self.n + 1):
-                        self.colSum[rowEnd % 2][colEnd] = (
-                            self.colSum[rowEnd % 2][colEnd - 1]
-                            + self.colSum[(rowEnd - 1) % 2][colEnd]
-                            - self.colSum[(rowEnd - 1) % 2][colEnd - 1]
-                            + (1 if self.p[rowEnd - 1][colEnd - 1] >= self.h else 0)
+                # count the number of valid plots with rowStart, colStart as the top left position of the region we are validating.
+                for rowEnd in range(rowStart, self.m):
+                    # we initialize the count of valid plots in the current row to 0.
+                    currRowValidPlots = 0
+                    for colEnd in range(colStart, self.n):
+                        currRowValidPlots += (
+                            1 if self.p[rowEnd][colEnd] >= self.h else 0
                         )
+
+                        # we add the count of valid plots until ith column of current row to the count of valid plots until ith column of the previous rows.
+                        self.rowValidPlots[colEnd] += currRowValidPlots
 
                         totRows = rowEnd - rowStart + 1
                         totCols = colEnd - colStart + 1
@@ -49,13 +49,13 @@ class Main:
                         # We check whether the chosen plot is an optimal square plot satisfying the min tree requirement and store it if bigger than the previous maximal result.
                         if (
                             totRows == totCols
-                            and self.colSum[rowEnd % 2][colEnd] == totRows * totCols
+                            and self.rowValidPlots[colEnd] == totRows * totCols
                             and totRows > self.maxSquareLen
                         ):
-                            self.resultIndicesArr[0] = rowStart
-                            self.resultIndicesArr[1] = colStart
-                            self.resultIndicesArr[2] = rowEnd
-                            self.resultIndicesArr[3] = colEnd
+                            self.resultIndicesArr[0] = rowStart + 1
+                            self.resultIndicesArr[1] = colStart + 1
+                            self.resultIndicesArr[2] = rowEnd + 1
+                            self.resultIndicesArr[3] = colEnd + 1
                             self.maxSquareLen = totRows
 
         return self.resultIndicesArr
@@ -63,7 +63,7 @@ class Main:
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-TIME COMPLEXITY  : O(m*n*m*n + m*n*n) = O(m^2 * n^2)
+TIME COMPLEXITY  : O(m*n*(n + m*n) = O(m^2 * n^2 + m*n^2) = O(m^2 * n^2)
 SPACE COMPLEXITY : O(n)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
