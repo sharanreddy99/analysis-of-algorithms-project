@@ -20,7 +20,7 @@ class Main:
         # Size of the maximal square plot
         self.maxSquareLen = 0
 
-        # Stores the count of valid plots for each column.
+        # Stores the count of valid plots until each column.
         self.rowValidPlots = [0 for i in range(self.n)]
 
     def main(self):
