@@ -65,6 +65,9 @@ def plotDataFromOutputFile():
                     if key == "task":
                         continue
 
+                    if dataArr.get(data["task"]) == None:
+                        continue
+
                     dataArr[data["task"]][key].append(data[key])
                     dataArr[data["task"]]["label"] = "TASK - {0}".format(data["task"])
 
@@ -87,7 +90,7 @@ def plotDataFromOutputFile():
             }
         )
 
-    plotBarGraph(plotDataArr, xLabel, yLabel, filename)
+    # plotBarGraph(plotDataArr, xLabel, yLabel, filename)
     plotLineGraph(plotDataArr, xLabel, yLabel, filename)
 
 

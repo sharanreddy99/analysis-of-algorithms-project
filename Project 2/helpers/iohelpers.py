@@ -169,6 +169,9 @@ def plotPandasTableProblem3():
     #                     break
 
     #             data = json.loads(chunk)
+    #             if dataArr.get(data["task"]) == None:
+    #                 continue
+
     #             dataArr[data["task"]]["combinedData"].append(
     #                 (
     #                     data["n"],
