@@ -4,11 +4,11 @@ noOfTests=1
 
 rm -rf plots/*
 for ((x = 1; x <= $noOfTests; x++)); do
-    m=6
-    n=6
+    m=30
+    n=30
     h=10
     maxDiff=2
-    testCases=20
+    testCases=10
     fixedAxis=("mn" "mk" "nk")
     variableAxis=("k" "n" "m")
     variableAxisLabels=("Faulty Plots (k)" "No of Columns (n)" "No of Rows (m)")
@@ -23,7 +23,8 @@ for ((x = 1; x <= $noOfTests; x++)); do
         make runfromtestfile tasks="6,7A,7B" filename=$inpFileName
         make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime_prob1.png" foldername=${outputRespFolder} tasks="1,2,3"
         make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime_prob2.png" foldername=${outputRespFolder} tasks="4,5A,5B"
-        make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime_prob3.png" foldername=${outputRespFolder} tasks="6,7A,7B"
+        make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime_prob3a.png" foldername=${outputRespFolder} tasks="6,7A,7B"
+        make runplotoutput xaxis=${variableAxis[$idx]} yaxis=executionTime xlabel="${variableAxisLabels[$idx]}" ylabel="Execution Time" filename="${fixedAxis[$idx]}_${variableAxis[$idx]}_and_executionTime_prob3b.png" foldername=${outputRespFolder} tasks="7A,7B"
         make rungentable filename="table_${fixedAxis[$idx]}_${variableAxis[$idx]}_prob1.png" foldername="${outputRespFolder}${variableAxis[idx]}/" tasks="1,2,3" testcases=$testCases
         make rungentable filename="table_${fixedAxis[$idx]}_${variableAxis[$idx]}_prob2.png" foldername="${outputRespFolder}${variableAxis[idx]}/" tasks="4,5A,5B" testcases=$testCases
         make rungentable filename="table_${fixedAxis[$idx]}_${variableAxis[$idx]}_prob3.png" foldername="${outputRespFolder}${variableAxis[idx]}/" tasks="6,7A,7B" testcases=$testCases
