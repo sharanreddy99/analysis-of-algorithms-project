@@ -110,13 +110,15 @@ class Main:
         return self.dp[rowEnd][colEnd]
 
     def main(self):
-        self.compute(self.m, self.n, self.k)
+        for k in range(self.k + 1):
+            self.initDPArray()
+            self.compute(self.m, self.n, k)
         return self.resultIndicesArr
 
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-TIME COMPLEXITY  : O(m*n)
+TIME COMPLEXITY  : O(m*n*k)
 SPACE COMPLEXITY : O(m*n)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------

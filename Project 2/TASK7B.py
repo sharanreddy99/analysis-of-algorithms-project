@@ -88,24 +88,25 @@ class Main:
                     self.maxSquareLen = totRows
 
     def main(self):
-        for rowEnd in range(1, self.m + 1):
-            for colEnd in range(1, self.n + 1):
-                # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
+        for k in range(self.k + 1):
+            for rowEnd in range(1, self.m + 1):
+                for colEnd in range(1, self.n + 1):
+                    # maximum square area formed by the plot, which is adjacent to the current bottom right plot position, with atmost k exemptions.
 
-                length = min(
-                    self.dp[rowEnd - 1][colEnd],
-                    self.dp[rowEnd][colEnd - 1],
-                    self.dp[rowEnd - 1][colEnd - 1],
-                )
-                self.dp[rowEnd][colEnd] = length
-                self.validateAndStoreRegion(rowEnd, colEnd, length + 1, self.k)
+                    length = min(
+                        self.dp[rowEnd - 1][colEnd],
+                        self.dp[rowEnd][colEnd - 1],
+                        self.dp[rowEnd - 1][colEnd - 1],
+                    )
+                    self.dp[rowEnd][colEnd] = length
+                    self.validateAndStoreRegion(rowEnd, colEnd, length + 1, k)
 
         return self.resultIndicesArr
 
 
 """
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
-TIME COMPLEXITY  : O(m*n)
+TIME COMPLEXITY  : O(m*n*k)
 SPACE COMPLEXITY : O(m*n)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
